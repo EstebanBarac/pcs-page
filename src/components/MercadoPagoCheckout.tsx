@@ -6,7 +6,17 @@ import { useRouter } from 'next/navigation';
 
 declare global {
   interface Window {
-    MercadoPago: any;
+    MercadoPago: {
+      new (publicKey: string, options?: { locale: string }): MercadoPagoInstance;
+    };
+  }
+
+  interface MercadoPagoInstance {
+    checkout: (config: {
+      preference: { id: string };
+      render: { container: string; label: string };
+      callbacks: { onSubmit: () => void };
+    }) => void;
   }
 }
 
