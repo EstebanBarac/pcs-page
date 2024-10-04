@@ -28,7 +28,7 @@ if (!process.env.MERCADO_PAGO_ACCESS_TOKEN) {
   throw new Error('MERCADO_PAGO_ACCESS_TOKEN is not defined')
 }
 
-if (!process.env.PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
   throw new Error('Supabase environment variables are not defined')
 }
 
@@ -39,7 +39,7 @@ if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
 const client = new MercadoPagoConfig({ accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN })
 
 const supabase = createClient(
-  process.env.PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 

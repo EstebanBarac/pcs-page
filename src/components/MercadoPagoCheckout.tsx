@@ -75,7 +75,7 @@ export default function MercadoPagoCheckout() {
 
   useEffect(() => {
     if (preferenceId && window.MercadoPago) {
-      const mp = new window.MercadoPago(process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY!, {
+      const mp = new window.MercadoPago(process.env.NEXT_MERCADO_PAGO_PUBLIC_KEY!, {
         locale: 'es-AR'
       })
 

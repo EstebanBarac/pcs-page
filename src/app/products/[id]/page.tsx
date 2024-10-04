@@ -9,8 +9,8 @@ import { useCart } from '../../../context/CartContext';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 
-const supabaseUrl = process.env.PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env._PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.SUPABASE_URL!;
+const supabaseAnonKey = process.env._SUPABASE_ANON_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
