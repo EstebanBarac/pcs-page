@@ -1,6 +1,28 @@
 import { NextResponse } from 'next/server'
 import { MercadoPagoConfig, Preference } from 'mercadopago'
 import { createClient } from '@supabase/supabase-js'
+import { sendTelegramNotification } from '@/lib/telegramNotifier'
+
+// Definir interfaces para los tipos
+interface Item {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+interface CustomerInfo {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
+interface RequestBody {
+  items: Item[];
+  totalAmount: number;
+  customerInfo: CustomerInfo;
+}
 
 if (!process.env.MERCADO_PAGO_ACCESS_TOKEN) {
   throw new Error('MERCADO_PAGO_ACCESS_TOKEN is not defined')
@@ -8,6 +30,10 @@ if (!process.env.MERCADO_PAGO_ACCESS_TOKEN) {
 
 if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
   throw new Error('Supabase environment variables are not defined')
+}
+
+if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
+  throw new Error('Telegram environment variables are not defined')
 }
 
 const client = new MercadoPagoConfig({ accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN })
@@ -19,7 +45,7 @@ const supabase = createClient(
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
+    const body: RequestBody = await request.json()
     const { items, totalAmount, customerInfo } = body
 
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -29,7 +55,8 @@ export async function POST(request: Request) {
     const preference = new Preference(client)
 
     const preferenceData = {
-      items: items.map((item: any) => ({
+      items: items.map((item: Item) => ({
+        id: item.id,
         title: item.name,
         unit_price: Number(item.price),
         quantity: Number(item.quantity),
@@ -63,7 +90,7 @@ export async function POST(request: Request) {
     }
 
     // Create order items in Supabase
-    const orderItems = items.map((item: any) => ({
+    const orderItems = items.map((item: Item) => ({
       order_id: order.id,
       product_id: item.id,
       quantity: item.quantity,
@@ -77,6 +104,17 @@ export async function POST(request: Request) {
     if (itemsError) {
       throw new Error(`Error creating order items: ${itemsError.message}`)
     }
+
+    // Send Telegram notification
+    await sendTelegramNotification({
+      id: order.id,
+      customer_name: customerInfo.name,
+      customer_email: customerInfo.email,
+      customer_phone: customerInfo.phone,
+      address: customerInfo.address,
+      total: totalAmount,
+      items: preferenceData.items
+    })
 
     return NextResponse.json({ id: result.id, orderId: order.id })
   } catch (error) {

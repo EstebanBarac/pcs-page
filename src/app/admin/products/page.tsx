@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
 
@@ -35,7 +35,7 @@ export default function AdminProductsPage() {
   }
 
   async function createProduct() {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('products')
       .insert([newProduct])
       .select()
