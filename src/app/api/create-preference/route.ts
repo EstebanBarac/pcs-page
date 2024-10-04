@@ -28,7 +28,7 @@ if (!process.env.MERCADO_PAGO_ACCESS_TOKEN) {
   throw new Error('MERCADO_PAGO_ACCESS_TOKEN is not defined')
 }
 
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+if (!process.env.PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
   throw new Error('Supabase environment variables are not defined')
 }
 
@@ -39,7 +39,7 @@ if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
 const client = new MercadoPagoConfig({ accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN })
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.PUBLIC_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
@@ -62,9 +62,9 @@ export async function POST(request: Request) {
         quantity: Number(item.quantity),
       })),
       back_urls: {
-        success: `${process.env.NEXT_PUBLIC_BASE_URL}/success`,
-        failure: `${process.env.NEXT_PUBLIC_BASE_URL}/failed`,
-        pending: `${process.env.NEXT_PUBLIC_BASE_URL}/pending`,
+        success: `/success`,
+        failure: `/failed`,
+        pending: `/pending`,
       },
       auto_return: 'approved' as const,
     }
