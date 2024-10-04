@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: true,
     env: {
-      NEXT_MERCADO_PAGO_PUBLIC_KEY: process.env.NEXT_MERCADO_PAGO_PUBLIC_KEY,
+      MERCADO_PAGO_PUBLIC_KEY: process.env.MERCADO_PAGO_PUBLIC_KEY,
     },
     images: {
       remotePatterns: ['hfktfenbxjrkprdmvcle.supabase.co'],
