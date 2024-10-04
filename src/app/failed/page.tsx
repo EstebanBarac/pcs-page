@@ -14,7 +14,7 @@ export default function FailedPage() {
           Tu pago no pudo ser procesado. Esto puede deberse a fondos insuficientes o a un problema con tu método de pago.
         </p>
         <button
-          onClick={() => router.push('/checkout')}
+          onClick={() => router.push('/')}
           className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition duration-300"
         >
           Intentar de Nuevo

@@ -12,7 +12,6 @@ interface Product {
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true)
   const [newProduct, setNewProduct] = useState({ name: '', description: '', price: 0, stock: 0 })
 
   useEffect(() => {
@@ -20,7 +19,6 @@ export default function AdminProductsPage() {
   }, [])
 
   async function fetchProducts() {
-    setLoading(true)
     const { data, error } = await supabase
       .from('products')
       .select('*')
@@ -31,7 +29,6 @@ export default function AdminProductsPage() {
     } else {
       setProducts(data || [])
     }
-    setLoading(false)
   }
 
   async function createProduct() {

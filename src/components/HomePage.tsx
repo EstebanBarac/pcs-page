@@ -1,58 +1,25 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import {  useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { PlayIcon, PauseIcon, ChevronDownIcon,  } from 'lucide-react'
+import {  ChevronDownIcon,  } from 'lucide-react'
 import localFont from 'next/font/local'
 
 const blanka = localFont({ src: '../../public/fonts/Blanka-Regular.otf' })
 
 export default function HomePage() {
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [isMuted, setIsMuted] = useState(true)
-  const [progress, setProgress] = useState(0)
+ 
   const videoRef = useRef<HTMLVideoElement>(null)
-
-  const togglePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause()
-      } else {
-        videoRef.current.play()
-      }
-      setIsPlaying(!isPlaying)
-    }
-  }
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted
-      setIsMuted(!isMuted)
-    }
-  }
-
-  const handleProgress = () => {
-    if (videoRef.current) {
-      const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100
-      setProgress(progress)
-    }
-  }
 
   useEffect(() => {
     const videoElement = videoRef.current
     if (videoElement) {
-      videoElement.addEventListener('timeupdate', handleProgress)
-      videoElement.addEventListener('ended', () => setIsPlaying(false))
-      
       // Autoplay
       videoElement.play().catch(error => {
         console.log("Autoplay was prevented:", error)
-        setIsPlaying(false)
       })
     }
     return () => {
       if (videoElement) {
-        videoElement.removeEventListener('timeupdate', handleProgress)
-        videoElement.removeEventListener('ended', () => setIsPlaying(false))
       }
     }
   }, [])
@@ -82,7 +49,6 @@ export default function HomePage() {
             ref={videoRef}
             className="w-full h-auto"
             playsInline
-            muted={isMuted}
             loop
           >
             <source src="pc-build.mp4" type="video/mp4" />
