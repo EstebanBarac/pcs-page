@@ -8,7 +8,7 @@ const brandLogos = [
   '/brands/rog-logo.png',
   '/brands/nvidia-logo.png',
   '/brands/amd-logo.png',
-  '/brands/intel-logo.png',
+  '/brands/Intel-logo.png',
   '/brands/Razer-Logo.png',
   // Añade más logos según sea necesario
 ]

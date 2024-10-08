@@ -1,18 +1,37 @@
-"use client"
+'use client'
+
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
+import { Pencil, Trash2, Plus } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { toast, Toaster } from 'react-hot-toast'
 
 interface Product {
   id: string
   name: string
-  description: string
+  description_primera: string
   price: number
-  stock: number
+  images: { url: string }[];
+  category_id: number
+  shortdescription: string
+  description_segunda: string
+  spec_mother: string
+  spec_procesador: string
+  spec_grafica: string
+  spec_refrigeracion: string
+  spec_fuente: string
+  spec_almacenamiento: string
+  spec_ram: string
 }
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([])
-  const [newProduct, setNewProduct] = useState({ name: '', description: '', price: 0, stock: 0 })
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   useEffect(() => {
     fetchProducts()
@@ -26,22 +45,25 @@ export default function AdminProductsPage() {
 
     if (error) {
       console.error('Error fetching products:', error)
+      toast.error('Error al cargar los productos')
     } else {
       setProducts(data || [])
     }
   }
 
-  async function createProduct() {
+  async function createOrUpdateProduct(product: Partial<Product>) {
     const { error } = await supabase
       .from('products')
-      .insert([newProduct])
+      .upsert([product])
       .select()
 
     if (error) {
-      console.error('Error creating product:', error)
+      console.error('Error creating/updating product:', error)
+      toast.error('Error al guardar el producto')
     } else {
-      setNewProduct({ name: '', description: '', price: 0, stock: 0 })
+      toast.success('Producto guardado exitosamente')
       fetchProducts()
+      setIsDialogOpen(false)
     }
   }
 
@@ -53,122 +75,108 @@ export default function AdminProductsPage() {
 
     if (error) {
       console.error('Error deleting product:', error)
+      toast.error('Error al eliminar el producto')
     } else {
+      toast.success('Producto eliminado exitosamente')
       fetchProducts()
     }
   }
 
-  return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold text-gray-900">Manage Products</h1>
-      
-      <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">Add New Product</h2>
-        <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-          <div className="sm:col-span-3">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              value={newProduct.name}
-              onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-          <div className="sm:col-span-3">
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-              Description
-            </label>
-            <input
-              type="text"
-              name="description"
-              id="description"
-              value={newProduct.description}
-              onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-          <div className="sm:col-span-3">
-            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-              Price
-            </label>
-            <input
-              type="number"
-              name="price"
-              id="price"
-              value={newProduct.price}
-              onChange={(e) => setNewProduct({ ...newProduct, price: Number(e.target.value) })}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-          <div className="sm:col-span-3">
-            <label htmlFor="stock" className="block text-sm font-medium text-gray-700">
-              Stock
-            </label>
-            <input
-              type="number"
-              name="stock"
-              id="stock"
-              value={newProduct.stock}
-              onChange={(e) => setNewProduct({ ...newProduct, stock: Number(e.target.value) })}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-        </div>
-        <div className="mt-5">
-          <button
-            type="button"
-            onClick={createProduct}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Add Product
-          </button>
-        </div>
+  const ProductForm = ({ product }: { product: Partial<Product> }) => (
+    <div className="grid grid-cols-2 gap-4">
+      <div className="col-span-2">
+        <Label htmlFor="name">Nombre</Label>
+        <Input
+          id="name"
+          value={product.name || ''}
+          onChange={(e) => setEditingProduct({ ...product, name: e.target.value } as Product)}
+        />
       </div>
+      <div className="col-span-2">
+        <Label htmlFor="shortdescription">Descripción Corta</Label>
+        <Input
+          id="shortdescription"
+          value={product.shortdescription || ''}
+          onChange={(e) => setEditingProduct({ ...product, shortdescription: e.target.value } as Product)}
+        />
+      </div>
+      <div>
+        <Label htmlFor="price">Precio</Label>
+        <Input
+          id="price"
+          type="number"
+          value={product.price || ''}
+          onChange={(e) => setEditingProduct({ ...product, price: Number(e.target.value) } as Product)}
+        />
+      </div>
+      <div>
+        <Label htmlFor="category_id">Categoría ID</Label>
+        <Input
+          id="category_id"
+          type="number"
+          value={product.category_id || ''}
+          onChange={(e) => setEditingProduct({ ...product, category_id: Number(e.target.value) } as Product)}
+        />
+      </div>
+      {/* Añade aquí más campos según sea necesario */}
+    </div>
+  )
 
-      <div className="bg-white shadow rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Description
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Price
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Stock
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.description}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.price.toFixed(2)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.stock}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button
-                    onClick={() => deleteProduct(product.id)}
-                    className="text-red-600 hover:text-red-900"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+  return (
+    <div className="min-h-screen  text-white p-8">
+      <Toaster position="top-right" />
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">Administrar Productos</h1>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={() => setEditingProduct({} as Product)}>
+                <Plus className="mr-2 h-4 w-4" /> Añadir Producto
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>{editingProduct?.id ? 'Editar' : 'Añadir'} Producto</DialogTitle>
+              </DialogHeader>
+              <ProductForm product={editingProduct || {}} />
+              <Button onClick={() => createOrUpdateProduct(editingProduct!)}>
+                Guardar
+              </Button>
+            </DialogContent>
+          </Dialog>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <Card key={product.id} className="bg-gray-900">
+              <CardHeader>
+                <CardTitle className="flex justify-between items-center text-white">
+                  {product.name}
+                  <div>
+                    <Button variant="ghost" size="icon" onClick={() => {
+                      setEditingProduct(product)
+                      setIsDialogOpen(true)
+                    }}>
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={() => deleteProduct(product.id)}>
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {product.images && product.images.length > 0 && (
+                  <img src={product.images[0]?.url} alt={product.name} className="w-full h-48 object-cover mb-4 rounded" />
+                )}
+                <p className="text-sm text-white mb-2">{product.shortdescription}</p>
+                <p className="font-bold text-white">${product.price.toFixed(2)}</p>
+              </CardContent>
+              <CardFooter>
+                <p className="text-sm text-white">Categoría: {product.category_id}</p>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   )
