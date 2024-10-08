@@ -88,10 +88,10 @@ export default function PcsNuevasGraficasOutletPage() {
             <h2 className="text-xl font-semibold text-gray-800 mb-3 hover:text-amber-600">{product.name}</h2>
             <p className="text-base text-black mb-4">{product.shortdescription}</p>
             <div className="flex justify-between items-center">
-              <span className="text-2xl font-bold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{formatPrice(product.price)}</span>
+              <span className="text-3xl font-bold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{formatPrice(product.price)}</span>
               <Link
                 href={`/products/${product.id}`}
-                className="bg-gradient-to-r from-[#FF512F] to-[#F09819] text-white px-4 py-3 rounded-full hover:opacity-75 transition duration-300"
+                className="bg-gradient-to-r from-[#FF512F] to-[#F09819] text-white px-4 py-3 rounded-3xl hover:opacity-60 transition duration-300"
               >
                 Ver detalles
               </Link>

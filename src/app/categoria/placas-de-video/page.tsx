@@ -65,7 +65,7 @@ export default function PcsNuevasGraficasOutletPage() {
   return (
     <div className="bg-gradient-to-b from-gray-900 to-black min-h-screen">
   <div className="container mx-auto px-4 py-8">
-    <h1 className="text-4xl font-bold mb-8 text-center text-white">Placas de Video</h1>
+    <h1 className="text-4xl font-bold mb-8 text-center text-white">Placas de Video Nvidia</h1>
 
     {/* Grid con más espacio entre columnas y filas */}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
@@ -88,10 +88,10 @@ export default function PcsNuevasGraficasOutletPage() {
             <h2 className="text-xl font-semibold text-gray-800 mb-3 hover:text-amber-600">{product.name}</h2>
             <p className="text-base text-black mb-4">{product.shortdescription}</p>
             <div className="flex justify-between items-center">
-              <span className="text-2xl font-bold text-amber-600">{formatPrice(product.price)}</span>
+              <span className="text-3xl font-bold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{formatPrice(product.price)}</span>
               <Link
                 href={`/products/${product.id}`}
-                className="bg-gradient-to-r from-[#FF512F] to-[#F09819] text-white px-4 py-3 rounded-full hover:opacity-75 transition duration-300"
+                className="bg-gradient-to-r from-[#FF512F] to-[#F09819] text-white px-4 py-3 rounded-3xl hover:opacity-60 transition duration-300"
               >
                 Ver detalles
               </Link>

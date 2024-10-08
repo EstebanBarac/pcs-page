@@ -50,7 +50,7 @@ export default function PcsNuevasGraficasOutletPage() {
   useEffect(() => {
     async function loadProducts() {
       setLoading(true)
-      const fetchedProducts = await getProductsByCategory(3) // Asumiendo que 2 es el ID de la categoría
+      const fetchedProducts = await getProductsByCategory(1) // Asumiendo que 2 es el ID de la categoría
       setProducts(fetchedProducts)
       setLoading(false)
     }
