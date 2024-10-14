@@ -86,7 +86,7 @@ export default function FloatingCart() {
                   </div>
                   <Link href="/checkout">
                     <button
-                      onClick={() => {/* Implementar lógica de checkout */}}
+                      onClick={() => {setIsOpen(false)}}
                       className="w-full bg-gradient-to-r from-[#FF512F] to-[#F09819] text-white py-2 px-4 rounded-md hover:opacity-75 transition duration-300"
                     >
                       Continuar con la Compra

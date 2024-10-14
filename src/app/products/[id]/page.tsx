@@ -157,8 +157,8 @@ function PCDetail({ product }: { product: Product }) {
 
 function PeripheralDetail({ product }: { product: Product }) {
   const sections = [
-    { title: "Características", description: product.description_primera },
-    { title: "Especificaciones", description: product.description_segunda },
+    { title: "", description: product.spec_mother },
+    { title: "", description: product.spec_procesador },
   ];
 
   return (
@@ -192,8 +192,8 @@ function GraphicsCardDetail({ product }: { product: Product }) {
     <>
       <AnimatedSection>
         <motion.div className="md:w-1/2" variants={fadeInUp}>
-          <h2 className="text-3xl font-bold mb-4">Especificaciones</h2>
-          <p className="text-xl mb-4">{product.shortdescription}</p>
+          <h2 className="text-3xl font-bold mb-4">Caracteristicas</h2>
+          <p className="text-xl mb-4">{product.spec_mother}</p>
         </motion.div>
         <motion.div 
           className="relative w-full md:w-1/2 h-[40vh] rounded-lg overflow-hidden"
@@ -211,7 +211,7 @@ function GraphicsCardDetail({ product }: { product: Product }) {
       <AnimatedSection imageFirst>
         <motion.div className="md:w-1/2" variants={fadeInUp}>
           <h2 className="text-3xl font-bold mb-4">Rendimiento</h2>
-          <p className="text-xl mb-4">{product.shortdescription}</p>
+          <p className="text-xl mb-4">{product.spec_procesador}</p>
         </motion.div>
         <motion.div 
           className="relative w-full md:w-1/2 h-[40vh] rounded-lg overflow-hidden"
