@@ -43,7 +43,7 @@ export default function CategoryShowcase() {
   const router = useRouter()
 
   return (
-    <div className=" min-h-screen py-12">
+    <div className="md:mt-24 min-h-screen py-12">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text mb-12">Categorías</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

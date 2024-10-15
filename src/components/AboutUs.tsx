@@ -1,17 +1,16 @@
 'use client'
 import { useRef, useEffect } from 'react'
 import { motion, useAnimation, useInView } from 'framer-motion'
-import Image from 'next/image'
 
-const brandLogos = [
-  '/brands/msi-logo.png',
-  '/brands/rog-logo.png',
-  '/brands/nvidia-logo.png',
-  '/brands/amd-logo.png',
-  '/brands/Intel-logo.png',
-  '/brands/Razer-Logo.png',
-  // Añade más logos según sea necesario
-]
+// const brandLogos = [
+//   '/brands/msi-logo.png',
+//   '/brands/rog-logo.png',
+//   '/brands/nvidia-logo.png',
+//   '/brands/amd-logo.png',
+//   '/brands/Intel-logo.png',
+//   '/brands/Razer-Logo.png',
+//   // Añade más logos según sea necesario
+// ]
 
 export default function AboutUs() {
   const controls = useAnimation()
@@ -62,11 +61,11 @@ export default function AboutUs() {
             className="text-white sm:text-lg md:text-2xl text-lg  mb-20 max-w-6xl mx-auto text-center"
             variants={itemVariants}
           >
-            Ofrecemos PCs personalizadas de alta gama, diseñadas para maximizar el rendimiento en juegos, creación de contenido y tareas profesionales. Nos especializamos en equipos potentes y configuraciones a medida, utilizando componentes de primera línea como gráficas RTX y procesadores de última generación. Nuestro objetivo es brindarte tecnología de alta calidad a precios competitivos, con asesoramiento experto para que elijas la mejor configuración según tus necesidades.
-            <br /><br />Ofrecemos computadoras armadas a medida, computadoras nuevas con gráficas RTX línea 40, computadoras nuevas con gráficas de outlet línea RTX 30, tambien ofrecemos una gama de productos seleccionados para gaming como teclados, sillas, etc. Aseguramos la mejor calidad posible, no dudes en consultarnos, presupuestamos sin cargo.          </motion.p>
+            Ofrecemos computadoras de alta gama. Nos especializamos en equipos potentes y configuraciones a medida, utilizando componentes de primera línea como gráficas RTX series 30 y 40 con procesadores de última generación, tambien ofrecemos periféricos de primera línea. Nuestro objetivo es brindarte tecnología de alta calidad a precios competitivos asegurandote el mejor presupuesto/rendimiento posible, con asesoramiento experto para que elijas la mejor configuración según tus necesidades. No dudes en consultarnos, presupuestamos sin cargo.
+             </motion.p>
         </motion.div>
 
-        <div className="relative h-24 overflow-hidden bg-gray-800 rounded-lg">
+        {/* <div className="relative h-24 overflow-hidden bg-gray-800 rounded-lg">
           <motion.div
             className="flex absolute"
             animate={{
@@ -97,7 +96,7 @@ export default function AboutUs() {
               </div>
             ))}
           </motion.div>
-        </div>
+        </div> */}
       </div>
     </section>
   )
