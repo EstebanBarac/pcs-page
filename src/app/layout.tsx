@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import FloatingCart from '../components/FloatingCart'
 import Loader from '../components/Loader'
 import './globals.css'
+import { SidebarMenu } from '../components/SidebarMenu'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,9 +34,12 @@ export default function RootLayout({
             <Loader />
           ) : (
             <>
-              <main className="flex-grow">{children}</main>
-              <Footer />
-              <FloatingCart />
+              <div className="min-h-screen">
+                <SidebarMenu />
+                  <main className="flex-grow">{children}</main>
+                  <Footer />
+                  <FloatingCart />
+              </div>  
             </>
           )}
         </CartProvider>

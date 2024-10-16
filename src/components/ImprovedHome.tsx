@@ -19,7 +19,7 @@ const ImprovedHomepageSection: React.FC = () => {
             <h3 className="text-2xl font-bold mb-4">Nuestra Solución</h3>
             <p className='text-lg'>
               En nuestra tienda, entendemos que el costo de las placas de video de alta gama ha alcanzado precios elevados. 
-              Para solucionar esto, hemos desarrollado una alternativa: nuestras computadoras nuevas incluyen placas de video 
+              Para solucionar esto, hemos desarrollado una alternativa: además de nuestras computadoras tope de gama, ofrecemos omputadoras nuevas con placas de video 
               outlet certificadas, lo que nos permite reducir los costos significativamente sin comprometer la calidad ni el rendimiento.
             </p>
           </div>
@@ -40,7 +40,7 @@ const ImprovedHomepageSection: React.FC = () => {
           <p className="text-xl max-w-6xl mx-auto">
             Nuestras gráficas de outlet son placas de video Nvidia RTX series 30 que han sido usadas durante 
             cortos períodos de tiempo y han pasado por un riguroso proceso de certificación para garantizar su 
-            perfecto funcionamiento.
+            perfecto funcionamiento, nunca fueron abiertas ni reparadas.
           </p>
         </div>
 
