@@ -34,7 +34,7 @@ const ImprovedHomepageSection: React.FC = () => {
         </div>
 
         <div className="mt-24 text-center mb-12">
-          <h2 className="text-4xl font-extrabold mb-8 bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">
+          <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">
             ¿Qué son las placas de Outlet?
           </h2>
           <p className="text-xl max-w-6xl mx-auto">
