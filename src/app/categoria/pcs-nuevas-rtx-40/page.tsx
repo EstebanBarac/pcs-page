@@ -65,7 +65,7 @@ export default function PcsNuevasGraficasOutletPage() {
   return (
     <div className="bg-gradient-to-b from-gray-900 to-black min-h-screen">
   <div className="container mx-auto px-4 py-8">
-    <h1 className="text-4xl font-bold mb-8 text-center text-white">PCs Nuevas con Gráficas Series 40</h1>
+    <h1 className="text-4xl font-bold mb-8 text-center text-white">PCs Nuevas con Gráficas Series 40 Nuevas</h1>
 
     {/* Grid con más espacio entre columnas y filas */}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
