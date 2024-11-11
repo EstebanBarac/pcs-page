@@ -21,6 +21,7 @@ interface Product {
   description_primera: string;
   description_segunda: string;
   price: number;
+  discounted_price: number | null;
   images: { url: string }[];
   category_id: number;
   spec_mother: string;
@@ -43,6 +44,10 @@ function formatPrice(price: number): string {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(price);
+}
+
+function calculateDiscountPercentage(originalPrice: number, discountedPrice: number): number {
+  return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100);
 }
 
 async function getProductWithCategory(id: string): Promise<{ product: Product; category: Category } | null> {
@@ -74,6 +79,7 @@ async function getProductWithCategory(id: string): Promise<{ product: Product; c
       name: data.name,
       shortdescription: data.shortdescription || '',
       price: data.price,
+      discounted_price: data.discounted_price,
       images: typeof data.images === 'string' ? JSON.parse(data.images) : data.images,
       category_id: data.category_id,
       description_primera: data.description_primera,
@@ -266,15 +272,16 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
   const handleAddToCart = () => {
     if (productData?.product) {
+      const { id, name, price, discounted_price } = productData.product;
       addItem({
-        id: productData.product.id,
-        name: productData.product.name,
-        price: productData.product.price,
+        id,
+        name,
+        price: discounted_price || price,
         quantity: 1,
       });
       toast({
         title: "Producto añadido",
-        description: `${productData.product.name} ha sido añadido al carrito.`,
+        description: `${name} ha sido añadido al carrito.`,
       });
     }
   };
@@ -349,7 +356,16 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             <h2 className='text-3xl font-bold mb-4 mt-4 bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text'>{product.name}</h2>
             <p className="text-lg mb-4 px-8">{product.description_primera}</p>
             <p className="text-lg mb-4 px-8">{product.description_segunda}</p>
-            <h3 className="text-3xl font-bold mb-4 mt-6">{formatPrice(product.price)} ARS</h3>
+            <div className="mb-4 mt-6">
+              {product.discounted_price ? (
+                <>
+                  <h3 className="text-3xl font-bold line-through text-gray-500">{formatPrice(product.price)} ARS</h3>
+                  <h3 className="text-4xl font-bold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{formatPrice(product.discounted_price)} ARS</h3>
+                </>
+              ) : (
+                <h3 className="text-3xl font-bold">{formatPrice(product.price)} ARS</h3>
+              )}
+            </div>
             <Button 
               className="bg-gradient-to-r from-[#FF512F] to-[#F09819] hover:opacity-75 text-white font-bold py-4 px-8 rounded-full transition duration-300 text-xl mt-4 mb-4"
               onClick={handleAddToCart}

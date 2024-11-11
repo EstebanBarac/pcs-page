@@ -11,24 +11,22 @@ const ImprovedHomepageSection: React.FC = () => {
         </h2>
         
         <p className="text-xl text-center mb-12 max-w-6xl mx-auto">
-        Ofrecemos computadoras de alta gama. Nos especializamos en equipos potentes y configuraciones a medida, utilizando componentes de primera línea como gráficas RTX series 30 y 40 con procesadores de última generación, tambien ofrecemos periféricos de primera línea. Nuestro objetivo es brindarte tecnología de alta calidad a precios competitivos asegurandote el mejor presupuesto/rendimiento posible.
+        Nos especializamos en computadoras de alta performance y configuraciones a medida, utilizando componentes de primera línea como gráficas RTX series 30 y 40 con procesadores de última generación y ofrecemos periféricos de primera línea. Nuestro objetivo es brindarte tecnología de alta calidad a precios competitivos asegurandote el mejor costo/rendimiento.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <div className="bg-gradient-to-r from-[#ff522fd6] to-[#f09619c6] rounded-lg p-6 shadow-lg transform transition duration-500 hover:scale-105">
             <h3 className="text-2xl font-bold mb-4">Nuestra Solución</h3>
             <p className='text-lg'>
-              En nuestra tienda, entendemos que el costo de las placas de video de alta gama ha alcanzado precios elevados. 
-              Para solucionar esto, hemos desarrollado una alternativa: además de nuestras computadoras tope de gama, ofrecemos omputadoras nuevas con placas de video 
+              En nuestra tienda, conocemos que el costo de las placas de alta gama es una variable importante. 
+              Para solucionar esto, hemos desarrollado una alternativa: además de nuestras computadoras tope de gama, ofrecemos computadoras nuevas con placas de video 
               outlet certificadas, lo que nos permite reducir los costos significativamente sin comprometer la calidad ni el rendimiento.
             </p>
           </div>
           <div className="bg-gradient-to-l from-[#ff522fd6] to-[#f09619c6] rounded-lg p-6 shadow-lg transform transition duration-500 hover:scale-105">
             <h3 className="text-2xl font-bold mb-4">Beneficios</h3>
             <p className='text-lg'>
-              Con esta solución, logramos que el precio final de nuestras PCs se reduzca hasta la mitad en comparación 
-              con equipos que usan tarjetas completamente nuevas, ahorrando millones de pesos. Así, te brindamos una 
-              excelente oportunidad para acceder a la tecnología más avanzada a un costo mucho más accesible.
+              Con esta solución, logramos que el precio final de nuestras PCs se reduzca en comparación con equipos que usan tarjetas nuevas, generando un ahorro significativo. De este modo brindamos una excelente oportunidad para acceder a las tecnologias mas avanzadas con un costo mas accesible.
             </p>
           </div>
         </div>

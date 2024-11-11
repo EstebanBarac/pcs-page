@@ -23,7 +23,7 @@ const chatId = process.env.TELEGRAM_CHAT_ID as string;
 
 export async function sendTelegramNotification(orderDetails: OrderDetails) {
   const message = `
-Nueva venta realizada:
+Nueva Orden realizada:
 
 ID de la orden: ${orderDetails.id}
 Cliente: ${orderDetails.customer_name}
