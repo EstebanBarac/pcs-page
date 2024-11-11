@@ -134,8 +134,8 @@ export default function AdminOrdersPage() {
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <p className="font-bold text-green-500">{formatPrice(order.total)} ARS</p>
-                  <p className="text-sm text-gray-400">{new Date(order.created_at).toLocaleString()}</p>
+                  <p className="font-bold text-green-500">{formatPrice(order.total)}</p>
+                  <p className=" hidden md:block text-sm text-gray-400">{new Date(order.created_at).toLocaleString()}</p>
                   {expandedOrder === order.id ? <ChevronUp /> : <ChevronDown />}
                 </div>
               </div>
