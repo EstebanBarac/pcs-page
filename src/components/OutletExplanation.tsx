@@ -61,7 +61,7 @@ export default function AboutUs() {
             className="text-white sm:text-lg md:text-2xl text-lg  mb-20 max-w-6xl mx-auto text-center"
             variants={itemVariants}
           >
-            Nuestras gráficas de outlet son placas de video Nvidia RTX series 30 que han sido usadas durante uno o dos años para gaming. A cada una de estas placas les realizamos pruebas exhaustivas, como Unigine Heaven 4.0 y 3DMark, para asegurarnos de que funcionen perfectamente y no presenten pérdida de rendimiento. Nos aseguramos de que todas las tarjetas estén en un estado estimado del 95%-100% de su capacidad original, sin defectos de rendimiento ni problemas de temperatura.
+            Nuestras gráficas de outlet son tarjetas de video Nvidia RTX de la serie 30 que, aunque han sido usadas por cortos períodos, han pasado por un exhaustivo proceso de mantenimiento y certificación para asegurar su funcionamiento óptimo. Cada tarjeta es cuidadosamente abierta, limpiada a profundidad, y se le reemplazan tanto la pasta térmica como los pads térmicos, asegurando una excelente disipación de calor. Además, son sometidas a pruebas de estrés rigurosas, como Heaven Unigine y 3DMark, para verificar que operen con todo su rendimiento. Importante: estas placas no son reacondicionadas ni reparadas; son unidades usadas certificadas en condiciones óptimas.
             </motion.p>
         </motion.div>
 

@@ -36,9 +36,7 @@ const ImprovedHomepageSection: React.FC = () => {
             ¿Qué son las placas de Outlet?
           </h2>
           <p className="text-xl max-w-6xl mx-auto">
-            Nuestras gráficas de outlet son placas de video Nvidia RTX series 30 que han sido usadas durante 
-            cortos períodos de tiempo y han pasado por un riguroso proceso de certificación para garantizar su 
-            perfecto funcionamiento, nunca fueron abiertas ni reparadas.
+          Nuestras gráficas de outlet son tarjetas de video Nvidia RTX de la serie 30 que, aunque han sido usadas por cortos períodos, han pasado por un exhaustivo proceso de mantenimiento y certificación para asegurar su funcionamiento óptimo. Cada tarjeta es cuidadosamente abierta, limpiada a profundidad, y se le reemplazan tanto la pasta térmica como los pads térmicos, asegurando una excelente disipación de calor. Además, son sometidas a pruebas de estrés rigurosas, como Heaven Unigine y 3DMark, para verificar que operen con todo su rendimiento. Importante: estas placas no son reacondicionadas ni reparadas; son unidades usadas certificadas en condiciones óptimas.
           </p>
         </div>
 
