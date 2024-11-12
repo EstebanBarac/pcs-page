@@ -46,10 +46,6 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-function calculateDiscountPercentage(originalPrice: number, discountedPrice: number): number {
-  return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100);
-}
-
 async function getProductWithCategory(id: string): Promise<{ product: Product; category: Category } | null> {
   const { data, error } = await supabase
     .from('products')
@@ -354,18 +350,13 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         <AnimatedSection>
           <motion.div className="text-center items-center justify-center rounded-md border border-gray-800 bg-gradient-to-b from-gray-950 to-black px-3 py-2 p-8 relative" variants={fadeInUp}>
             <h2 className='text-3xl font-bold mb-4 mt-4 bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text'>{product.name}</h2>
-            <p className="text-lg mb-4 px-8">{product.description_primera}</p>
-            <p className="text-lg mb-4 px-8">{product.description_segunda}</p>
+            <p className="text-lg mb-4 px-4">{product.description_primera}</p>
+            <p className="text-lg mb-4 px-4">{product.description_segunda}</p>
             <div className="mb-4 mt-6">
               {product.discounted_price ? (
                 <>
                   <h3 className="text-3xl font-bold line-through text-gray-500">{formatPrice(product.price)} ARS</h3>
                   <h3 className="text-4xl font-bold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{formatPrice(product.discounted_price)} ARS</h3>
-                  <div className="absolute top-0 right-0 bg-red-600 text-white px-4 py-2 transform rotate-45 translate-x-12 translate-y-6">
-                    <span className="text-xl hidden xl:block font-bold">
-                      {calculateDiscountPercentage(product.price, product.discounted_price)}% OFF
-                    </span>
-                  </div>
                 </>
               ) : (
                 <h3 className="text-3xl font-bold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{formatPrice(product.price)} ARS</h3>
