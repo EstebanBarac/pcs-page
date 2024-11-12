@@ -25,7 +25,7 @@ export function TermsAndConditionsModal({ isOpen, onClose, onAccept }: TermsAndC
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">1. Aceptación de los términos</h3>
             <p>
-              Al utilizar nuestro sitio web y realizar una compra, usted acepta estar sujeto a estos términos y condiciones. Si no está de acuerdo con alguna parte de estos términos, no podrá realizar compras en nuestro sitio.
+            Al realizar una compra en nuestro sitio web, el cliente acepta estos términos y condiciones en su totalidad. Nos reservamos el derecho de modificar estos términos en cualquier momento sin previo aviso, por lo que recomendamos revisarlos.
             </p>
             <h3 className="text-lg font-semibold">2. Productos y precios</h3>
             <p>
@@ -33,27 +33,31 @@ export function TermsAndConditionsModal({ isOpen, onClose, onAccept }: TermsAndC
             </p>
             <h3 className="text-lg font-semibold">3. Envíos y devoluciones</h3>
             <p>
-              Los tiempos de envío pueden variar dependiendo de su ubicación. Para más información sobre nuestra política de devoluciones, por favor visite nuestra página de Devoluciones.
+            Ofrecemos diferentes métodos de envío para adaptarnos a tus necesidades. Los plazos de entrega estimados se detallarán en el momento de la compra. No nos responsabilizamos por demoras atribuibles a la empresa de mensajería o a factores externos a nuestro control.
             </p>
             <h3 className="text-lg font-semibold">4. Privacidad y seguridad</h3>
             <p>
-              Su privacidad es importante para nosotros. Consulte nuestra Política de Privacidad para obtener información sobre cómo recopilamos, usamos y protegemos su información personal.
+              Su privacidad es importante para nosotros, en cumplimiento con las normativas de protección de datos, garantizamos la confidencialidad y seguridad de la información personal de nuestros usuarios.
             </p>
-            <h3 className="text-lg font-semibold">5. Limitación de responsabilidad</h3>
+            <h3 className="text-lg font-semibold">5. Imágenes Ilustrativas</h3>
+            <p>
+              Las imágenes de los productos en nuestro sitio web son de carácter ilustrativo y pueden no representar fielmente el producto final recibido, especialmente en lo que respecta a detalles estéticos como colores o acabados. Nos esforzamos por mantener la información lo más precisa posible, pero pueden existir variaciones leves. Recomendamos leer atentamente la descripción del producto para obtener los detalles específicos.
+            </p>
+            <h3 className="text-lg font-semibold">6. Limitación de responsabilidad</h3>
             <p>
               En ningún caso seremos responsables por daños indirectos, incidentales, especiales o consecuentes que resulten del uso de nuestros productos o servicios.
             </p>
-            <h3 className="text-lg font-semibold">6. Ley aplicable</h3>
+            <h3 className="text-lg font-semibold">7. Garantía</h3>
             <p>
-              Estos términos y condiciones se regirán e interpretarán de acuerdo con las leyes de Argentina, sin tener en cuenta sus disposiciones sobre conflictos de leyes.
+              Ofrecemos garantía en cada producto según las políticas del fabricante y nuestra tienda. Para productos de outlet o reacondicionados, la garantía puede ser limitada.
             </p>
-            <h3 className="text-lg font-semibold">7. Cambios en los términos</h3>
+            <h3 className="text-lg font-semibold">8. Cambios en los términos</h3>
             <p>
               Nos reservamos el derecho de modificar estos términos en cualquier momento. Le recomendamos que revise esta página periódicamente para mantenerse informado de cualquier cambio.
             </p>
-            <h3 className="text-lg font-semibold">8. Contacto</h3>
+            <h3 className="text-lg font-semibold">9. Contacto</h3>
             <p>
-              Si tiene alguna pregunta sobre estos términos y condiciones, por favor contáctenos a través de nuestro formulario de contacto o envíenos un correo electrónico a support@example.com.
+            Para cualquier consulta o reclamación sobre una compra, puedes comunicarte con nuestro equipo de atención al cliente a través de los datos de contacto proporcionados en el sitio.
             </p>
           </div>
         </ScrollArea>
