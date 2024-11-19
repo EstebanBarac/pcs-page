@@ -10,13 +10,12 @@ interface Product {
   price: number
   discounted_price: number | null
   images: { url: string }[]
+  recommended: boolean // New field added
 }
 
 interface ProductCardProps {
   product: Product
 }
-
-
 
 function formatPrice(price: number): string {
   return new Intl.NumberFormat('es-AR', {
@@ -46,6 +45,11 @@ export function ImprovedProductCard({ product }: ProductCardProps) {
         {product.discounted_price && (
           <div className="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 m-2 rounded-md font-semibold">
             {calculateDiscountPercentage(product.price, product.discounted_price)}% OFF
+          </div>
+        )}
+        {product.recommended && (
+          <div className="absolute top-0 right-0 bg-green-500 text-white px-2 py-1 m-2 rounded-md font-semibold">
+            Recomendado
           </div>
         )}
       </div>

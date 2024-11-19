@@ -17,6 +17,7 @@ interface Product {
   price: number
   discounted_price: number | null
   images: { url: string }[]
+  recommended: boolean
 }
 
 async function getProductsByCategory(categoryId: number): Promise<Product[]> {
@@ -24,13 +25,14 @@ async function getProductsByCategory(categoryId: number): Promise<Product[]> {
     .from('products')
     .select('*')
     .eq('category_id', categoryId)
-    .order('created_at', { ascending: false })
+    .order('price', { ascending: true })
 
   if (error) {
     console.error('Error fetching products:', error)
     return []
   }
 
+  console.log('Fetched products:', data) // Log fetched data
   return data || []
 }
 
@@ -41,8 +43,14 @@ export default function PcsNuevasGraficasOutletPage() {
   useEffect(() => {
     async function loadProducts() {
       setLoading(true)
-      const fetchedProducts = await getProductsByCategory(3) // Assuming 3 is the ID for the category
-      setProducts(fetchedProducts)
+      const fetchedProducts = await getProductsByCategory(3)
+      const sortedProducts = fetchedProducts.sort((a, b) => {
+        const priceA = a.discounted_price !== null ? a.discounted_price : a.price
+        const priceB = b.discounted_price !== null ? b.discounted_price : b.price
+        return priceA - priceB
+      })
+      console.log('Sorted products:', sortedProducts) // Log sorted products
+      setProducts(sortedProducts)
       setLoading(false)
     }
 

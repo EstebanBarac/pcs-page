@@ -10,7 +10,7 @@ const blanka = localFont({ src: '../../public/fonts/Blanka-Regular.otf' })
 
 const menuItems = [
   { name: 'Inicio', href: '/', icon: Home },
-  { name: 'PCs con Gráficas Nuevas', href: '/categoria/pcs-nuevas-rtx-40', icon: ShoppingCart },
+  { name: 'PCs Nuevas', href: '/categoria/pcs-nuevas-rtx-40', icon: ShoppingCart },
   { name: 'PCs con Gráficas Outlet', href: '/categoria/pcs-nuevas-graficas-outlet', icon: Cpu },
   { name: 'Placas de Video', href: '/categoria/placas-de-video', icon: Headphones },
   { name: 'Periféricos', href: '/categoria/perifericos', icon: CreditCard },

@@ -42,7 +42,13 @@ export default function PcsNuevasGraficasOutletPage() {
     async function loadProducts() {
       setLoading(true)
       const fetchedProducts = await getProductsByCategory(1) // Assuming 3 is the ID for the category
-      setProducts(fetchedProducts)
+      // Sort products by price (considering discounted price if available)
+      const sortedProducts = fetchedProducts.sort((a, b) => {
+        const priceA = a.discounted_price !== null ? a.discounted_price : a.price
+        const priceB = b.discounted_price !== null ? b.discounted_price : b.price
+        return priceA - priceB
+      })
+      setProducts(sortedProducts)
       setLoading(false)
     }
 
