@@ -17,6 +17,7 @@ interface Product {
   price: number
   discounted_price: number | null
   images: { url: string }[]
+  recommended: boolean
 }
 
 async function getProductsByCategory(categoryId: number): Promise<Product[]> {
