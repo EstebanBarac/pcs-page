@@ -14,6 +14,7 @@ const menuItems = [
   { name: 'PCs con Gráficas Outlet', href: '/categoria/pcs-nuevas-graficas-outlet', icon: Cpu },
   { name: 'Placas de Video', href: '/categoria/placas-de-video', icon: Headphones },
   { name: 'Periféricos', href: '/categoria/perifericos', icon: CreditCard },
+  { name: '¿Qué PC Elegir?', href: '/guia-pc', icon: CreditCard },
 ]
 
 export function SidebarMenu() {
