@@ -20,7 +20,7 @@ const categories: Category[] = [
   },
   {
     id: 'rtx40',
-    title: 'PCs Series RTX 40 Nuevas',
+    title: 'PCs Nuevas',
     image: '/pcs-nuevas.jpg',
     link: '/categoria/pcs-nuevas-rtx-40'
   },

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { ChevronDownIcon } from 'lucide-react'
 import localFont from 'next/font/local'
 
-const blanka = localFont({ src: '../../public/fonts/Blanka-Regular.otf' })
+const horizon = localFont({ src: '../../public/fonts/horizon.otf' })
 
 export default function HomePage() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -20,18 +20,18 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen text-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 m-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16 md:mb-12"
         >
-          <h1 className={`${blanka.className} text-8xl mt-28 md:mt-2 md:text-9xl bg-clip-text bg-white`}>
-            ATLAS
+          <h1 className={`${horizon.className} text-6xl mt-28 md:mt-2 md:text-8xl bg-clip-text bg-white`}>
+            NOXUS
           </h1>
-          <p className="text-xl mt-4 font-bold md:text-2xl bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">
-            Descubre el futuro con nuestros productos
+          <p className="text-xl font-extrabold md:text-2xl bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">
+            HARDWARE
           </p>
         </motion.div>
 

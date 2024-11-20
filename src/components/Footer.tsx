@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-lg font-semibold mb-4">Atlas Hardware</h3>
+            <h3 className="text-lg font-semibold mb-4">Noxus Hardware</h3>
             <p className="text-gray-400">Tienda Online de Hardware en Neuquen Capital, Argentina. Envios gratis en Neuquen, consultar envios fuera de la provincia. </p>
           </div>
           <div>

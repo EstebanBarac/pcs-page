@@ -40,7 +40,7 @@ export function SidebarMenu() {
       <div className="flex h-full flex-col bg-gradient-to-b from-[#152331] to-[#000000] text-white">
         <div className="flex h-14 items-center border-b border-gray-700 px-4">
           <Link href="/" className="flex items-center space-x-2">
-            <span className={`${blanka.className} text-center text-2xl`}>ATLAS</span>
+            <span className={`${blanka.className} text-center text-2xl`}>NX</span>
           </Link>
         </div>
         <ScrollArea className="flex-1">
