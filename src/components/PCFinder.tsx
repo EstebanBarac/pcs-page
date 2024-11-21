@@ -201,7 +201,7 @@ export function PCFinder() {
                         <p className="text-sm line-through text-gray-500">
                           {formatPrice(mainRecommendation.price)}
                         </p>
-                        <p className="text-3xl font-bold text-green-600">
+                        <p className="text-2xl lg:text-3xl font-bold text-green-600">
                           {formatPrice(mainRecommendation.discounted_price)}
                         </p>
                       </>
