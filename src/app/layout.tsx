@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from 'react'
 import { Inter } from 'next/font/google'
 import { CartProvider } from '../context/CartContext'
@@ -27,7 +28,7 @@ export default function RootLayout({
   }, [])
 
   return (
-    <html lang="en">
+    <html lang="es">
       <body className={`${inter.className} flex flex-col min-h-screen bg-gradient-to-r from-[#152331] to-[#000000]`}>
         <CartProvider>
           {isLoading ? (
@@ -36,9 +37,9 @@ export default function RootLayout({
             <>
               <div className="min-h-screen">
                 <SidebarMenu />
-                  <main className="flex-grow">{children}</main>
-                  <Footer />
-                  <FloatingCart />
+                <main className="flex-grow">{children}</main>
+                <Footer />
+                <FloatingCart />
               </div>  
             </>
           )}
