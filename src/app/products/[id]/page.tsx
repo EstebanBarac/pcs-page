@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useSpring, useInView } from 'framer-motion';
+import { motion, useScroll, useSpring, useInView, useAnimation } from 'framer-motion';
 import { useCart } from '../../../context/CartContext';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
@@ -94,32 +94,78 @@ async function getProductWithCategory(id: string): Promise<{ product: Product; c
   };
 }
 
-function AnimatedSection({ children, imageFirst = false }: { children: React.ReactNode; imageFirst?: boolean }) {
+function AnimatedPCSection({ component, image, index }: { component: { name: string; description: string }; image: string; index: number }) {
+  const controls = useAnimation();
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
+  const inView = useInView(ref, { once: false, amount: 0.5 });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
+  const imageVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
 
   return (
     <motion.div
       ref={ref}
       initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={{
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.3 } },
-      }}
-      className={`flex flex-col md:flex-row items-center justify-between gap-16 mb-32 ${
-        imageFirst ? 'md:flex-row-reverse' : ''
-      }`}
+      animate={controls}
+      variants={containerVariants}
+      className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center justify-between gap-16 mb-32`}
     >
-      {children}
+      <motion.div className="md:w-1/2" variants={itemVariants}>
+        <motion.h2 
+          className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text"
+          variants={itemVariants}
+        >
+          {component.name}
+        </motion.h2>
+        <motion.p className="text-xl mb-4" variants={itemVariants}>{component.description}</motion.p>
+      </motion.div>
+      <motion.div 
+        className="relative w-full md:w-1/2 h-[40vh] rounded-lg overflow-hidden"
+        variants={imageVariants}
+      >
+        <Image
+          src={image}
+          alt={`${component.name}`}
+          layout="fill"
+          objectFit="cover"
+          className="transition-transform duration-300 hover:scale-105"
+        />
+      </motion.div>
     </motion.div>
   );
 }
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
 
 function PCDetail({ product }: { product: Product }) {
   const components = [
@@ -134,24 +180,7 @@ function PCDetail({ product }: { product: Product }) {
   return (
     <>
       {components.map((component, index) => (
-        <AnimatedSection key={component.name} imageFirst={index % 2 !== 0}>
-          <motion.div className="md:w-1/2" variants={fadeInUp}>
-            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{component.name}</h2>
-            <p className="text-xl mb-4">{component.description}</p>
-          </motion.div>
-          <motion.div 
-            className="relative w-full md:w-1/2 h-[40vh] rounded-lg overflow-hidden"
-            variants={fadeInUp}
-          >
-            <Image
-              src={product.images[index + 1]?.url || product.images[0].url}
-              alt={`${product.name} ${component.name}`}
-              layout="fill"
-              objectFit="cover"
-              className="transition-transform duration-300 hover:scale-105"
-            />
-          </motion.div>
-        </AnimatedSection>
+        <AnimatedPCSection key={component.name} component={component} image={product.images[index + 1]?.url || product.images[0].url} index={index} />
       ))}
     </>
   );
@@ -231,6 +260,33 @@ function GraphicsCardDetail({ product }: { product: Product }) {
     </>
   );
 }
+
+function AnimatedSection({ children, imageFirst = false }: { children: React.ReactNode; imageFirst?: boolean }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.3 } },
+      }}
+      className={`flex flex-col md:flex-row items-center justify-between gap-16 mb-32 ${
+        imageFirst ? 'md:flex-row-reverse' : ''
+      }`}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
 
 export default function ProductDetail({ params }: { params: { id: string } }) {
   const [productData, setProductData] = useState<{ product: Product; category: Category } | null>(null);

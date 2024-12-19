@@ -44,7 +44,7 @@ export default function HomePage() {
             loop
             playsInline
           >
-            <source src="pc-build.mp4" type="video/mp4" />
+            <source src="1219.mp4" type="video/mp4" />
             Tu navegador no soporta el tag de video.
           </video>
 
