@@ -30,6 +30,7 @@ interface Product {
   spec_refrigeracion: string;
   spec_fuente: string;
   spec_ram: string;
+  in_stock: boolean;
 }
 
 interface Category {
@@ -86,6 +87,7 @@ async function getProductWithCategory(id: string): Promise<{ product: Product; c
       spec_refrigeracion: data.spec_refrigeracion,
       spec_fuente: data.spec_fuente,
       spec_ram: data.spec_ram,
+      in_stock: data.in_stock,
     },
     category: {
       id: data.categories.id,
@@ -323,7 +325,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   const handleAddToCart = () => {
-    if (productData?.product) {
+    if (productData?.product && productData.product.in_stock) {
       const { id, name, price, discounted_price } = productData.product;
       addItem({
         id,
@@ -418,11 +420,12 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                 <h3 className="text-3xl font-bold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{formatPrice(product.price)} ARS</h3>
               )}
             </div>
-            <Button 
-              className="bg-gradient-to-r from-[#FF512F] to-[#F09819] hover:opacity-75 text-white font-bold py-4 px-8 rounded-full transition duration-300 text-xl mt-4 mb-4"
+              <Button 
+              className={`bg-gradient-to-r from-[#FF512F] to-[#F09819] hover:opacity-75 text-white font-bold py-4 px-8 rounded-full transition duration-300 text-xl mt-4 mb-4 ${!product.in_stock && 'opacity-50 cursor-not-allowed'}`}
               onClick={handleAddToCart}
+              disabled={!product.in_stock}
             >
-              Agregar al carrito
+              {product.in_stock ? 'Agregar al carrito' : 'Agotado'}
             </Button>
           </motion.div>
         </AnimatedSection>

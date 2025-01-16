@@ -11,6 +11,7 @@ interface Product {
   discounted_price: number | null
   images: { url: string }[]
   recommended: boolean // New field added
+  in_stock: boolean
 }
 
 interface ProductCardProps {
@@ -72,9 +73,10 @@ export function ImprovedProductCard({ product }: ProductCardProps) {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-[#FF512F] to-[#F09819] text-white px-3 py-2 rounded-md hover:bg-amber-600 transition-colors duration-200"
+                disabled={!product.in_stock}
+                className={`${!product.in_stock && 'opacity-50 cursor-not-allowed'} bg-gradient-to-r from-[#FF512F] to-[#F09819] text-white px-3 py-2 rounded-md hover:bg-amber-600 transition-colors duration-200`}
               >
-                Ver detalles
+                {product.in_stock ? 'Ver detalles' : 'Sin Stock'}
               </motion.button>
             </Link>
           </div>
