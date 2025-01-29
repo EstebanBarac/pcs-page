@@ -256,7 +256,7 @@ export default function PCBuilder() {
               variant={activeTab === 'customizations' ? 'default' : 'ghost'}
               onClick={() => setActiveTab('customizations')}
             >
-              PERSONALIZACION Y FINAL
+              PERSONALIZACION
             </Button>
           </div>
         </div>

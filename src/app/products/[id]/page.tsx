@@ -111,11 +111,11 @@ function ProductSpecs({ product }: { product: Product }) {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-14 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
       {specs.map((spec, index) => (
-        <div key={index} className="bg-[#1A1731]/80 p-4 w-48 rounded-xs backdrop-blur-sm">
-          <h3 className="text-white text-lg text-center font-bold mb-4">{spec.name}</h3>
-          <p className="text-gray-400 text-center">{spec.value}</p>
+        <div key={index} className="bg-[#1A1731]/80 p-4 rounded-md backdrop-blur-sm text-center">
+          <h3 className="text-white text-lg font-bold mb-2">{spec.name}</h3>
+          <p className="text-gray-400">{spec.value}</p>
         </div>
       ))}
     </div>
