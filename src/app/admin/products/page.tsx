@@ -142,10 +142,15 @@ export default function AdminProductsPage() {
           <div key={spec}>
             <Label htmlFor={`spec_${spec}`}>{`Spec ${spec}`}</Label>
             <Input
-              id={`spec_${spec}`}
-              value={product[`spec_${spec}` as keyof Product] || ''}
-              onChange={(e) => setEditingProduct({ ...product, [`spec_${spec}`]: e.target.value } as Product)}
-            />
+                id={`spec_${spec}`}
+                value={(() => {
+                  const val = product[`spec_${spec}` as keyof Product];
+                  return Array.isArray(val) ? JSON.stringify(val) : val || '';
+                })()}
+                onChange={(e) =>
+                  setEditingProduct({ ...product, [`spec_${spec}`]: e.target.value } as Product)
+                }
+              />
           </div>
         ))}
       </div>
