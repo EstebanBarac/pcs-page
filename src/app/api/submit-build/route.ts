@@ -1,10 +1,19 @@
-import { NextResponse } from 'next/server'
+interface Component {
+  category: string;
+  selected: string;
+}
+
+interface RequestData {
+  components: Component[];
+  customNotes?: string;
+  timestamp?: string;
+}
 
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL!
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json()
+    const data: RequestData = await request.json(); // Definir el tipo de data
     
     // Crear el mensaje para Discord
     const message = {
@@ -12,7 +21,7 @@ export async function POST(request: Request) {
         title: "Nueva Configuración de PC Personalizada",
         color: 0x6E3AFF, // Color morado
         fields: [
-          ...data.components.map(comp => ({
+          ...data.components.map((comp: Component) => ({
             name: comp.category,
             value: comp.selected,
             inline: true
@@ -28,7 +37,7 @@ export async function POST(request: Request) {
           text: "PC Builder"
         }
       }]
-    }
+    };
 
     // Enviar a Discord
     const response = await fetch(DISCORD_WEBHOOK_URL, {
@@ -37,18 +46,18 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(message)
-    })
+    });
 
     if (!response.ok) {
-      throw new Error('Error al enviar a Discord')
+      throw new Error('Error al enviar a Discord');
     }
 
-    return NextResponse.json({ success: true })
+    return Response.json({ success: true });
   } catch (error) {
-    console.error('Error:', error)
-    return NextResponse.json(
+    console.error('Error:', error);
+    return Response.json(
       { error: 'Error al procesar la solicitud' },
       { status: 500 }
-    )
+    );
   }
 }
