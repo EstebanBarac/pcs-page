@@ -78,22 +78,21 @@ export default function PcsNuevasGraficasOutletPage() {
 
   return (
     <div className="bg-gradient-to-b from-gray-900 to-black">
-      <div className="pt-12">
-        <h2 className="font-bold text-white text-center text-4xl sm:text-5xl md:text-5xl">
-          MONITORES{' '}
-          <span className="text-[#6E3AFF]">SELECCIONADOS</span>
+      <div className="pt-12 text-center">
+        <h2 className="font-bold text-white text-4xl sm:text-5xl md:text-5xl">
+          MONITORES <span className="text-[#6E3AFF]">SELECCIONADOS</span>
         </h2>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-black w-96 shadow-xl mx-9 overflow-hidden"
+              className="bg-black shadow-xl rounded-lg overflow-hidden"
             >
-              <div className="relative m-auto h-64">
+              <div className="relative w-full h-64">
                 <Image
                   src={product.images[0]?.url || '/placeholder.jpg'}
                   alt={product.name}
@@ -108,25 +107,9 @@ export default function PcsNuevasGraficasOutletPage() {
                 )}
               </div>
 
-              {/* Benchmark Images */}
-              {/* <div className="flex gap-2 p-2 bg-black/50">
-                {[1, 2, 3, 4].map((_, index) => (
-                  <div key={index} className="relative w-[60px] h-[30px]">
-                    <Image
-                      src="/placeholder.svg"
-                      alt="Performance benchmark"
-                      layout="fill"
-                      className="object-cover rounded"
-                    />
-                  </div>
-                ))}
-              </div> */}
-
               <div className="p-4">
-                <h3 className="text-white text-md font-bold mb-2">{product.name}</h3>
-                {/* <p className="text-gray-400 text-sm mb-4 line-clamp-2">{product.shortdescription}</p> */}
-                
-                <div className="flex flex-col gap-4">
+                <h3 className="text-white text-lg font-bold mb-2">{product.name}</h3>
+                <div className="flex flex-col gap-2">
                   <div className="flex items-baseline gap-2 mb-4">
                     {product.discounted_price ? (
                       <>
@@ -145,22 +128,15 @@ export default function PcsNuevasGraficasOutletPage() {
                   </div>
 
                   <Button 
-                    className={`w-full mb-2 ${
+                    className={`w-full $ {
                       product.in_stock ? 'bg-amber-500 hover:bg-amber-800' : 'bg-gray-600 cursor-not-allowed'
                     }`}
                     disabled={!product.in_stock}
                   >
-                    <Link href={`/products/${product.id}`}>
-                        {product.in_stock ? 'VER DETALLES' : 'SIN STOCK'}
-                    </Link> 
+                    <Link href={`/products/${product.id}`} className="w-full text-center block">
+                      {product.in_stock ? 'VER DETALLES' : 'SIN STOCK'}
+                    </Link>
                   </Button>
-
-                  {/* <Link 
-                    href={`/products/${product.id}`}
-                    className="text-center text-sm text-amber-600 hover:text-amber-500 transition-colors"
-                  >
-                    Ver Detalles
-                  </Link> */}
                 </div>
               </div>
             </motion.div>

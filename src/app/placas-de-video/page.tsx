@@ -71,61 +71,42 @@ export default function PcsNuevasGraficasOutletPage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-[#0D0B1F]">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-amber-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-amber-600"></div>
       </div>
     )
   }
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-black">
-      <div className="pt-12">
-        <h2 className="font-bold text-white text-center text-4xl sm:text-5xl md:text-5xl">
-          PLACAS DE{' '}
-          <span className="text-[#6E3AFF]">VIDEO</span>
+    <div className="bg-gradient-to-b from-gray-900 to-black min-h-screen">
+      <div className="pt-12 text-center">
+        <h2 className="font-bold text-white text-3xl sm:text-4xl md:text-5xl">
+          PLACAS DE <span className="text-[#6E3AFF]">VIDEO</span>
         </h2>
       </div>
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {products.map((product) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-black w-96 shadow-xl mx-9 overflow-hidden"
+              className="bg-black shadow-xl rounded-lg overflow-hidden"
             >
-              <div className="relative m-auto h-64">
+              <div className="relative w-full h-56 sm:h-64">
                 <Image
                   src={product.images[0]?.url || '/placeholder.jpg'}
                   alt={product.name}
                   fill
-                  objectFit="cover"
-                  className="transition-transform duration-300 hover:scale-105"
+                  className="object-cover transition-transform duration-300 hover:scale-105"
                 />
                 {product.discounted_price && (
                   <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full font-bold text-sm">
-                    ${product.price - product.discounted_price} OFF
+                    {formatPrice(product.price - product.discounted_price)} OFF
                   </div>
                 )}
               </div>
-
-              {/* Benchmark Images */}
-              {/* <div className="flex gap-2 p-2 bg-black/50">
-                {[1, 2, 3, 4].map((_, index) => (
-                  <div key={index} className="relative w-[60px] h-[30px]">
-                    <Image
-                      src="/placeholder.svg"
-                      alt="Performance benchmark"
-                      layout="fill"
-                      className="object-cover rounded"
-                    />
-                  </div>
-                ))}
-              </div> */}
-
               <div className="p-4">
-                <h3 className="text-white text-md font-bold mb-2">{product.name}</h3>
-                {/* <p className="text-gray-400 text-sm mb-4 line-clamp-2">{product.shortdescription}</p> */}
-                
+                <h3 className="text-white text-lg font-bold mb-2">{product.name}</h3>
                 <div className="flex flex-col gap-4">
                   <div className="flex items-baseline gap-2 mb-4">
                     {product.discounted_price ? (
@@ -143,30 +124,21 @@ export default function PcsNuevasGraficasOutletPage() {
                       </span>
                     )}
                   </div>
-
-                  <Button 
-                    className={`w-full mb-2 ${
+                  <Button
+                    className={`w-full mb-2 text-center py-2 rounded-lg transition-colors text-white ${
                       product.in_stock ? 'bg-amber-500 hover:bg-amber-800' : 'bg-gray-600 cursor-not-allowed'
                     }`}
                     disabled={!product.in_stock}
                   >
                     <Link href={`/products/${product.id}`}>
-                        {product.in_stock ? 'VER DETALLES' : 'SIN STOCK'}
-                    </Link> 
+                      {product.in_stock ? 'VER DETALLES' : 'SIN STOCK'}
+                    </Link>
                   </Button>
-
-                  {/* <Link 
-                    href={`/products/${product.id}`}
-                    className="text-center text-sm text-amber-600 hover:text-amber-500 transition-colors"
-                  >
-                    Ver Detalles
-                  </Link> */}
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
-
         {products.length === 0 && (
           <p className="text-center text-gray-400 mt-8">
             No hay productos disponibles en esta categoría.
