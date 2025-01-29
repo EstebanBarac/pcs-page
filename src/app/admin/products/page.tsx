@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Textarea } from "@/components/ui/textarea"
 import { toast, Toaster } from 'react-hot-toast'
 
 interface Product {
@@ -83,51 +85,79 @@ export default function AdminProductsPage() {
   }
 
   const ProductForm = ({ product }: { product: Partial<Product> }) => (
-    <div className="grid grid-cols-2 gap-4">
-      <div className="col-span-2">
-        <Label htmlFor="name">Nombre</Label>
-        <Input
-          id="name"
-          value={product.name || ''}
-          onChange={(e) => setEditingProduct({ ...product, name: e.target.value } as Product)}
-        />
+    <ScrollArea className="h-[400px] pr-4">
+      <div className="space-y-4">
+        <div>
+          <Label htmlFor="name">Nombre</Label>
+          <Input
+            id="name"
+            value={product.name || ''}
+            onChange={(e) => setEditingProduct({ ...product, name: e.target.value } as Product)}
+          />
+        </div>
+        <div>
+          <Label htmlFor="shortdescription">Descripción Corta</Label>
+          <Textarea
+            id="shortdescription"
+            value={product.shortdescription || ''}
+            onChange={(e) => setEditingProduct({ ...product, shortdescription: e.target.value } as Product)}
+          />
+        </div>
+        <div>
+          <Label htmlFor="price">Precio</Label>
+          <Input
+            id="price"
+            type="number"
+            value={product.price || ''}
+            onChange={(e) => setEditingProduct({ ...product, price: Number(e.target.value) } as Product)}
+          />
+        </div>
+        <div>
+          <Label htmlFor="category_id">Categoría ID</Label>
+          <Input
+            id="category_id"
+            type="number"
+            value={product.category_id || ''}
+            onChange={(e) => setEditingProduct({ ...product, category_id: Number(e.target.value) } as Product)}
+          />
+        </div>
+        <div>
+          <Label htmlFor="description_primera">Descripción Primera</Label>
+          <Textarea
+            id="description_primera"
+            value={product.description_primera || ''}
+            onChange={(e) => setEditingProduct({ ...product, description_primera: e.target.value } as Product)}
+          />
+        </div>
+        <div>
+          <Label htmlFor="description_segunda">Descripción Segunda</Label>
+          <Textarea
+            id="description_segunda"
+            value={product.description_segunda || ''}
+            onChange={(e) => setEditingProduct({ ...product, description_segunda: e.target.value } as Product)}
+          />
+        </div>
+        {/* Add more fields for specs */}
+        {['mother', 'procesador', 'grafica', 'refrigeracion', 'fuente', 'almacenamiento', 'ram'].map((spec) => (
+          <div key={spec}>
+            <Label htmlFor={`spec_${spec}`}>{`Spec ${spec}`}</Label>
+            <Input
+              id={`spec_${spec}`}
+              value={product[`spec_${spec}` as keyof Product] || ''}
+              onChange={(e) => setEditingProduct({ ...product, [`spec_${spec}`]: e.target.value } as Product)}
+            />
+          </div>
+        ))}
       </div>
-      <div className="col-span-2">
-        <Label htmlFor="shortdescription">Descripción Corta</Label>
-        <Input
-          id="shortdescription"
-          value={product.shortdescription || ''}
-          onChange={(e) => setEditingProduct({ ...product, shortdescription: e.target.value } as Product)}
-        />
-      </div>
-      <div>
-        <Label htmlFor="price">Precio</Label>
-        <Input
-          id="price"
-          type="number"
-          value={product.price || ''}
-          onChange={(e) => setEditingProduct({ ...product, price: Number(e.target.value) } as Product)}
-        />
-      </div>
-      <div>
-        <Label htmlFor="category_id">Categoría ID</Label>
-        <Input
-          id="category_id"
-          type="number"
-          value={product.category_id || ''}
-          onChange={(e) => setEditingProduct({ ...product, category_id: Number(e.target.value) } as Product)}
-        />
-      </div>
-      {/* Añade aquí más campos según sea necesario */}
-    </div>
+    </ScrollArea>
   )
 
   return (
-    <div className="min-h-screen  text-white p-8">
+    <div className="p-8 bg-gray-100 min-h-screen">
       <Toaster position="top-right" />
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Administrar Productos</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Administrar Productos</h1>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button onClick={() => setEditingProduct({} as Product)}>
@@ -147,9 +177,9 @@ export default function AdminProductsPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
-            <Card key={product.id} className="bg-gray-900">
+            <Card key={product.id}>
               <CardHeader>
-                <CardTitle className="flex justify-between items-center text-white">
+                <CardTitle className="flex justify-between items-center">
                   {product.name}
                   <div>
                     <Button variant="ghost" size="icon" onClick={() => {
@@ -166,13 +196,13 @@ export default function AdminProductsPage() {
               </CardHeader>
               <CardContent>
                 {product.images && product.images.length > 0 && (
-                  <img src={product.images[0]?.url} alt={product.name} className="w-full h-48 object-cover mb-4 rounded" />
+                  <img src={product.images[0]?.url || "/placeholder.svg"} alt={product.name} className="w-full h-48 object-cover mb-4 rounded" />
                 )}
-                <p className="text-sm text-white mb-2">{product.shortdescription}</p>
-                <p className="font-bold text-white">${product.price.toFixed(2)}</p>
+                <p className="text-sm text-gray-600 mb-2">{product.shortdescription}</p>
+                <p className="font-bold text-gray-900">${product.price.toFixed(2)}</p>
               </CardContent>
               <CardFooter>
-                <p className="text-sm text-white">Categoría: {product.category_id}</p>
+                <p className="text-sm text-gray-600">Categoría: {product.category_id}</p>
               </CardFooter>
             </Card>
           ))}

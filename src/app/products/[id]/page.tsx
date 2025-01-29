@@ -3,11 +3,12 @@
 import { createClient } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useSpring, useInView, useAnimation } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../../context/CartContext';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!;
@@ -96,199 +97,30 @@ async function getProductWithCategory(id: string): Promise<{ product: Product; c
   };
 }
 
-function AnimatedPCSection({ component, image, index }: { component: { name: string; description: string }; image: string; index: number }) {
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: false, amount: 0.5 });
-
-  useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
-  }, [controls, inView]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
-
-  const imageVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: { duration: 0.8, ease: "easeOut" }
-    }
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={containerVariants}
-      className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center justify-between gap-16 mb-32`}
-    >
-      <motion.div className="md:w-1/2" variants={itemVariants}>
-        <motion.h2 
-          className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text"
-          variants={itemVariants}
-        >
-          {component.name}
-        </motion.h2>
-        <motion.p className="text-xl mb-4" variants={itemVariants}>{component.description}</motion.p>
-      </motion.div>
-      <motion.div 
-        className="relative w-full md:w-1/2 h-[40vh] rounded-lg overflow-hidden"
-        variants={imageVariants}
-      >
-        <Image
-          src={image}
-          alt={`${component.name}`}
-          layout="fill"
-          objectFit="cover"
-          className="transition-transform duration-300 hover:scale-105"
-        />
-      </motion.div>
-    </motion.div>
-  );
-}
-
-function PCDetail({ product }: { product: Product }) {
-  const components = [
-    { name: "Motherboard", description: product.spec_mother },
-    { name: "Procesador", description: product.spec_procesador },
-    { name: "Tarjeta Gráfica", description: product.spec_grafica },
-    { name: "Memoria RAM", description: product.spec_ram },
-    { name: "Refrigeración", description: product.spec_refrigeracion },
-    { name: "Fuente de Poder", description: product.spec_fuente },
+function ProductSpecs({ product }: { product: Product }) {
+  const specs = [
+    { name: "GABINETE", value: product.spec_mother },
+    { name: "GPU", value: product.spec_grafica },
+    { name: "CPU", value: product.spec_procesador },
+    { name: "MOTHERBOARD", value: product.spec_mother },
+    { name: "RAM", value: product.spec_ram },
+    { name: "ENFRIAMIENTO", value: product.spec_refrigeracion },
+    { name: "FUENTE", value: product.spec_fuente },
+    { name: "SOFTWARE", value: "WINDOWS 11" },
+    { name: "MEMORIA", value: "1TB KINGSTON NV5" },
   ];
 
   return (
-    <>
-      {components.map((component, index) => (
-        <AnimatedPCSection key={component.name} component={component} image={product.images[index + 1]?.url || product.images[0].url} index={index} />
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-14 mb-8">
+      {specs.map((spec, index) => (
+        <div key={index} className="bg-[#1A1731]/80 p-4 w-48 rounded-xs backdrop-blur-sm">
+          <h3 className="text-white text-lg text-center font-bold mb-4">{spec.name}</h3>
+          <p className="text-gray-400 text-center">{spec.value}</p>
+        </div>
       ))}
-    </>
+    </div>
   );
 }
-
-function PeripheralDetail({ product }: { product: Product }) {
-  const sections = [
-    { title: "", description: product.spec_mother },
-    { title: "", description: product.spec_procesador },
-  ];
-
-  return (
-    <>
-      {sections.map((section, index) => (
-        <AnimatedSection key={section.title} imageFirst={index % 2 !== 0}>
-          <motion.div className="md:w-1/2" variants={fadeInUp}>
-            <h2 className="text-3xl font-bold mb-4">{section.title}</h2>
-            <p className="text-xl mb-4">{section.description}</p>
-          </motion.div>
-          <motion.div 
-            className="relative w-full md:w-1/2 h-[40vh] rounded-lg overflow-hidden"
-            variants={fadeInUp}
-          >
-            <Image
-              src={product.images[index + 1]?.url || product.images[0].url}
-              alt={`${product.name} ${section.title}`}
-              layout="fill"
-              objectFit="cover"
-              className="transition-transform duration-300 hover:scale-105"
-            />
-          </motion.div>
-        </AnimatedSection>
-      ))}
-    </>
-  );
-}
-
-function GraphicsCardDetail({ product }: { product: Product }) {
-  return (
-    <>
-      <AnimatedSection>
-        <motion.div className="md:w-1/2" variants={fadeInUp}>
-          <h2 className="text-3xl font-bold mb-4">Caracteristicas</h2>
-          <p className="text-xl mb-4">{product.spec_mother}</p>
-        </motion.div>
-        <motion.div 
-          className="relative w-full md:w-1/2 h-[40vh] rounded-lg overflow-hidden"
-          variants={fadeInUp}
-        >
-          <Image
-            src={product.images[1]?.url || product.images[0].url}
-            alt={`${product.name} especificaciones`}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform duration-300 hover:scale-105"
-          />
-        </motion.div>
-      </AnimatedSection>
-      <AnimatedSection imageFirst>
-        <motion.div className="md:w-1/2" variants={fadeInUp}>
-          <h2 className="text-3xl font-bold mb-4">Rendimiento</h2>
-          <p className="text-xl mb-4">{product.spec_procesador}</p>
-        </motion.div>
-        <motion.div 
-          className="relative w-full md:w-1/2 h-[40vh] rounded-lg overflow-hidden"
-          variants={fadeInUp}
-        >
-          <Image
-            src={product.images[2]?.url || product.images[0].url}
-            alt={`${product.name} rendimiento`}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform duration-300 hover:scale-105"
-          />
-        </motion.div>
-      </AnimatedSection>
-    </>
-  );
-}
-
-function AnimatedSection({ children, imageFirst = false }: { children: React.ReactNode; imageFirst?: boolean }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={{
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.3 } },
-      }}
-      className={`flex flex-col md:flex-row items-center justify-between gap-16 mb-32 ${
-        imageFirst ? 'md:flex-row-reverse' : ''
-      }`}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
 
 export default function ProductDetail({ params }: { params: { id: string } }) {
   const [productData, setProductData] = useState<{ product: Product; category: Category } | null>(null);
@@ -296,12 +128,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const { addItem } = useCart();
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -342,15 +169,15 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-900 dark:bg-gray-900">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-amber-500"></div>
+      <div className="flex items-center justify-center min-h-screen bg-[#0D0B1F]">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
       </div>
     );
   }
 
   if (error || !productData) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#0D0B1F] text-white">
         <h1 className="text-4xl font-bold mb-4">Error</h1>
         <p className="text-xl mb-8">{error || 'Ocurrió un error al cargar el producto'}</p>
         <Button onClick={() => router.push('/')}>Volver a la página principal</Button>
@@ -358,77 +185,105 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
     );
   }
 
-  const { product, category } = productData;
+  const { product } = productData;
 
-  const renderProductDetails = () => {
-    switch (category.id) {
-      case 1: // PCs con Graficas nuevas
-      case 3: // PCs Nuevos con Graficas Outlet
-        return <PCDetail product={product} />;
-      case 2: // Perifericos
-        return <PeripheralDetail product={product} />;
-      case 4: // Graficas
-        return <GraphicsCardDetail product={product} />;
-      default:
-        return <PeripheralDetail product={product} />;
-    }
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
+    );
   };
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-black min-h-screen text-white">
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-amber-600 z-50"
-        style={{ scaleX, transformOrigin: "0%" }}
-      />
-
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <AnimatedSection>
-          <motion.h1 
-            className="text-6xl font-bold mb-8 text-center w-full bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text"
-            variants={fadeInUp}
-          >
+    <div 
+      className="min-h-screen bg-center"
+      style={{
+        backgroundImage: `url('/fondo/fondo01prueba.png')`,
+      }}
+    >
+      <div className="min-h-screen bg-black/70 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 py-16">
+          <h1 className="text-5xl font-bold mb-8 text-center text-white">
             {product.name}
-          </motion.h1>
-          <motion.div 
-            className="relative w-full h-[60vh] rounded-lg overflow-hidden"
-            variants={fadeInUp}
-          >
-            <Image
-              src={product.images[0].url}
-              alt={product.name}
-              layout="fill"
-              objectFit="cover"
-              className="transition-transform duration-300 hover:scale-105"
-            />
-          </motion.div>
-        </AnimatedSection>
+          </h1>
 
-        {renderProductDetails()}
-
-        <AnimatedSection>
-          <motion.div className="text-center items-center justify-center rounded-md border border-gray-800 bg-gradient-to-b from-gray-950 to-black px-3 py-2 p-8 relative" variants={fadeInUp}>
-            <h2 className='text-3xl font-bold mb-4 mt-4 bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text'>{product.name}</h2>
-            <p className="text-lg mb-4 px-4">{product.description_primera}</p>
-            <p className="text-lg mb-4 px-4">{product.description_segunda}</p>
-            <div className="mb-4 mt-6">
-              {product.discounted_price ? (
-                <>
-                  <h3 className="text-3xl font-bold line-through text-gray-500">{formatPrice(product.price)} ARS</h3>
-                  <h3 className="text-4xl font-bold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{formatPrice(product.discounted_price)} ARS</h3>
-                </>
-              ) : (
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">{formatPrice(product.price)} ARS</h3>
-              )}
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentImageIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="aspect-square relative rounded-lg overflow-hidden"
+                >
+                  <Image
+                    src={product.images[currentImageIndex].url || "/placeholder.svg"}
+                    alt={product.name}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </motion.div>
+              </AnimatePresence>
+              <button 
+                onClick={prevImage} 
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button 
+                onClick={nextImage} 
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full"
+              >
+                <ChevronRight size={24} />
+              </button>
             </div>
+
+            <div className=" p-6 rounded-lg">
+              <h2 className="text-3xl font-bold mb-4 text-white">Especificaciones</h2>
+              <ProductSpecs product={product} />
+              <div className="mb-4">
+                {product.discounted_price ? (
+                  <>
+                    <span className="text-2xl text-gray-400 line-through mr-2">
+                      {formatPrice(product.price)}
+                    </span>
+                    <span className="text-4xl font-bold text-amber-600">
+                      {formatPrice(product.discounted_price)}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-4xl font-bold text-white">
+                    {formatPrice(product.price)}
+                  </span>
+                )}
+              </div>
               <Button 
-              className={`bg-gradient-to-r from-[#FF512F] to-[#F09819] hover:opacity-75 text-white font-bold py-4 px-8 rounded-full transition duration-300 text-xl mt-4 mb-4 ${!product.in_stock && 'opacity-50 cursor-not-allowed'}`}
-              onClick={handleAddToCart}
-              disabled={!product.in_stock}
-            >
-              {product.in_stock ? 'Agregar al carrito' : 'Agotado'}
-            </Button>
-          </motion.div>
-        </AnimatedSection>
+                onClick={handleAddToCart}
+                disabled={!product.in_stock}
+                className={`w-full py-3 text-lg font-bold ${
+                  product.in_stock ? 'bg-amber-600 hover:bg-amber-700' : 'bg-gray-600 cursor-not-allowed'
+                }`}
+              >
+                {product.in_stock ? 'AÑADIR AL CARRITO' : 'SIN STOCK'}
+              </Button>
+            </div>
+          </div>
+
+          <div className="mb-16 bg-[#1A1731]/80 p-6 rounded-md backdrop-blur-sm">
+            <h2 className="text-3xl font-bold mb-4 text-white">Descripción</h2>
+            <p className="text-gray-300 text-xl mb-4">{product.description_primera}</p>
+            <p className="text-gray-300 text-xl">{product.description_segunda}</p>
+          </div>
+
+          {/* You can add more sections here, like customer reviews, related products, etc. */}
+        </div>
       </div>
     </div>
   );

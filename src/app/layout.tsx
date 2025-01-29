@@ -29,7 +29,7 @@ export default function RootLayout({
 
   return (
     <html lang="es">
-      <body className={`${inter.className} flex flex-col min-h-screen bg-gradient-to-r from-[#152331] to-[#000000]`}>
+      <body className={`${inter.className} flex flex-col min-h-screen bg-black`}>
         <CartProvider>
           {isLoading ? (
             <Loader />

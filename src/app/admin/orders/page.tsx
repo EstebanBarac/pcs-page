@@ -4,6 +4,11 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { ChevronDown, ChevronUp, Package, Truck, CheckCircle, AlertCircle } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { toast, Toaster } from 'react-hot-toast'
 
 const supabaseUrl = process.env.SUPABASE_URL!
@@ -73,11 +78,11 @@ export default function AdminOrdersPage() {
 
   const getStatusColor = (status: Order['status']) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-500';
-      case 'processing': return 'bg-blue-500';
-      case 'shipped': return 'bg-purple-500';
-      case 'delivered': return 'bg-green-500';
-      default: return 'bg-gray-500';
+      case 'pending': return 'bg-yellow-500 text-yellow-900';
+      case 'processing': return 'bg-blue-500 text-blue-900';
+      case 'shipped': return 'bg-purple-500 text-purple-900';
+      case 'delivered': return 'bg-green-500 text-green-900';
+      default: return 'bg-gray-500 text-gray-900';
     }
   }
 
@@ -113,50 +118,52 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <div className="min-h-screen  text-gray-100">
-      <Toaster position="top-right" />
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-6">Órdenes de Compra</h1>
+    <ScrollArea className="h-screen">
+      <div className="container mx-auto p-6 bg-white">
+        <Toaster position="top-right" />
+        <h1 className="text-3xl font-bold mb-6 text-gray-900">Órdenes de Compra</h1>
         <div className="space-y-4">
           {orders.map((order) => (
-            <div key={order.id} className="bg-gray-800 rounded-lg overflow-hidden">
-              <div 
-                className="flex justify-between items-center p-4 cursor-pointer"
-                onClick={() => toggleOrderExpansion(order.id)}
-              >
-                <div className="flex items-center space-x-4">
-                  <span className={`${getStatusColor(order.status)} p-2 rounded-full`}>
-                    {getStatusIcon(order.status)}
-                  </span>
-                  <div>
-                    <p className="font-semibold">{order.customer_name}</p>
-                    <p className="text-sm text-gray-400">{order.customer_email}</p>
+            <Card key={order.id}>
+              <CardHeader className="p-4">
+                <CardTitle className="flex justify-between items-center">
+                  <div className="flex items-center space-x-4">
+                    <Badge variant="outline" className={getStatusColor(order.status)}>
+                      {getStatusIcon(order.status)}
+                      <span className="ml-2 hidden sm:inline">{order.status}</span>
+                    </Badge>
+                    <div>
+                      <p className="font-semibold text-gray-900">{order.customer_name}</p>
+                      <p className="text-sm text-gray-500">{order.customer_email}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <p className="font-bold text-green-500">{formatPrice(order.total)}</p>
-                  <p className=" hidden md:block text-sm text-gray-400">{new Date(order.created_at).toLocaleString()}</p>
-                  {expandedOrder === order.id ? <ChevronUp /> : <ChevronDown />}
-                </div>
-              </div>
+                  <div className="flex items-center space-x-4">
+                    <p className="font-bold text-green-600">{formatPrice(order.total)}</p>
+                    <p className="hidden md:block text-sm text-gray-500">{new Date(order.created_at).toLocaleString()}</p>
+                    <Button variant="ghost" size="sm" onClick={() => toggleOrderExpansion(order.id)}>
+                      {expandedOrder === order.id ? <ChevronUp /> : <ChevronDown />}
+                    </Button>
+                  </div>
+                </CardTitle>
+              </CardHeader>
               {expandedOrder === order.id && (
-                <div className="p-4 border-t border-gray-700">
-                  <div className="grid grid-cols-2 gap-4 mb-4">
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                      <p className="text-sm text-gray-400">Teléfono</p>
-                      <p>{order.customer_phone}</p>
+                      <p className="text-sm text-gray-500">Teléfono</p>
+                      <p className="text-gray-900">{order.customer_phone}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">Dirección</p>
-                      <p>{order.address}</p>
+                      <p className="text-sm text-gray-500">Dirección</p>
+                      <p className="text-gray-900">{order.address}</p>
                     </div>
-                    <div className="col-span-2">
-                      <p className="text-sm text-gray-400 mb-2">Estado de la orden</p>
+                    <div className="md:col-span-2">
+                      <p className="text-sm text-gray-500 mb-2">Estado de la orden</p>
                       <Select
                         value={order.status}
                         onValueChange={(value) => updateOrderStatus(order.id, value as Order['status'])}
                       >
-                        <SelectTrigger className="w-32 bg-slate-800">
+                        <SelectTrigger className="w-32">
                           <SelectValue placeholder="Seleccionar estado" />
                         </SelectTrigger>
                         <SelectContent>
@@ -168,33 +175,33 @@ export default function AdminOrdersPage() {
                       </Select>
                     </div>
                   </div>
-                  <h3 className="font-semibold mb-2">Productos</h3>
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="text-left text-gray-400">
-                        <th className="pb-2">Producto</th>
-                        <th className="pb-2">Cantidad</th>
-                        <th className="pb-2">Precio</th>
-                        <th className="pb-2">Subtotal</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                  <h3 className="font-semibold mb-2 text-gray-900">Productos</h3>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Producto</TableHead>
+                        <TableHead>Cantidad</TableHead>
+                        <TableHead>Precio</TableHead>
+                        <TableHead>Subtotal</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
                       {order.items.map((item) => (
-                        <tr key={item.id}>
-                          <td className="py-1">{item.product.name}</td>
-                          <td className="py-1">{item.quantity}</td>
-                          <td className="py-1">${item.price.toFixed(2)}</td>
-                          <td className="py-1">${(item.quantity * item.price).toFixed(2)}</td>
-                        </tr>
+                        <TableRow key={item.id}>
+                          <TableCell>{item.product.name}</TableCell>
+                          <TableCell>{item.quantity}</TableCell>
+                          <TableCell>{formatPrice(item.price)}</TableCell>
+                          <TableCell>{formatPrice(item.quantity * item.price)}</TableCell>
+                        </TableRow>
                       ))}
-                    </tbody>
-                  </table>
-                </div>
+                    </TableBody>
+                  </Table>
+                </CardContent>
               )}
-            </div>
+            </Card>
           ))}
         </div>
       </div>
-    </div>
+    </ScrollArea>
   )
 }

@@ -3,18 +3,17 @@ import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Home, ShoppingCart, Cpu, Headphones, CreditCard, Menu } from 'lucide-react'
+import { Home, ShoppingCart, Headphones, CreditCard, Menu } from 'lucide-react'
 import localFont from 'next/font/local'
 
 const blanka = localFont({ src: '../../public/fonts/Blanka-Regular.otf' })
 
 const menuItems = [
-  { name: 'Inicio', href: '/', icon: Home },
-  { name: 'PCs Nuevas', href: '/categoria/pcs-nuevas-rtx-40', icon: ShoppingCart },
-  { name: 'PCs con Gráficas Outlet', href: '/categoria/pcs-nuevas-graficas-outlet', icon: Cpu },
-  { name: 'Placas de Video', href: '/categoria/placas-de-video', icon: Headphones },
-  { name: 'Periféricos', href: '/categoria/perifericos', icon: CreditCard },
-  { name: '¿Qué PC Elegir?', href: '/guia-pc', icon: CreditCard },
+  { name: 'Home', href: '/', icon: Home },
+  { name: 'Modelos', href: '/modelos', icon: ShoppingCart },
+  { name: 'Placas de Video', href: '/placas-de-video', icon: Headphones },
+  { name: 'Monitores', href: '/monitores', icon: CreditCard },
+  { name: '¿Qué PC Elegir?', href: '/como-elegir', icon: CreditCard },
 ]
 
 export function SidebarMenu() {
@@ -38,7 +37,7 @@ export function SidebarMenu() {
 
   function SidebarContent() {
     return (
-      <div className="flex h-full flex-col bg-gradient-to-b from-[#152331] to-[#000000] text-white">
+      <div className="flex h-full flex-col bg-black text-white">
         <div className="flex h-14 items-center border-b border-gray-700 px-4">
           <Link href="/" className="flex items-center space-x-2">
             <span className={`${blanka.className} text-center text-2xl`}>NX</span>

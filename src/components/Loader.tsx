@@ -3,9 +3,9 @@ import { motion } from 'framer-motion'
 
 export default function Loader() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
       <motion.div
-        className="w-20 h-20 border-4 border-amber-600 rounded-full"
+        className="w-20 h-20 border-4 border-amber-500 rounded-full"
         animate={{
           scale: [1, 1.2, 1],
           rotate: [0, 360],

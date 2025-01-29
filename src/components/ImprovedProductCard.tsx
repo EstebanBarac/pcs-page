@@ -36,7 +36,7 @@ export function ImprovedProductCard({ product }: ProductCardProps) {
     <motion.div
       className="bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-sm"
     >
-      <div className="relative aspect-square">
+      <div className="relative h-72 aspect-square">
         <Image
           src={product.images[0]?.url || '/placeholder.jpg'}
           alt={product.name}

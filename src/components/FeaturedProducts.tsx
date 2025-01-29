@@ -14,27 +14,27 @@ interface Category {
 const categories: Category[] = [
   {
     id: 'rtx30',
-    title: 'PCs Nuevas con RTX 30 Outlet',
-    image: '/PCS-OUTLET.jpeg',
-    link: '/categoria/pcs-nuevas-graficas-outlet'
+    title: 'MODELOS ',
+    image: '/moodelos.webp',
+    link: '/modelos'
   },
   {
     id: 'rtx40',
-    title: 'PCs Nuevas',
-    image: '/pcs-nuevas.jpg',
-    link: '/categoria/pcs-nuevas-rtx-40'
+    title: 'ARMADO A MEDIDA',
+    image: '/armado-a-medida.webp',
+    link: '/armado-a-medida'
   },
   {
     id: 'accessories',
-    title: 'Placas de Video',
+    title: 'PLACAS DE VIDEO',
     image: '/RTX40-graficas.jpg',
-    link: '/categoria/placas-de-video'
+    link: '/placas-de-video'
   },
   {
     id: 'laptops',
-    title: 'Periféricos',
-    image: '/perifericos.jpg',
-    link: '/categoria/perifericos'
+    title: 'MONITORES',
+    image: '/monitores.webp',
+    link: '/monitores'
   }
 ]
 
@@ -43,9 +43,11 @@ export default function CategoryShowcase() {
   const router = useRouter()
 
   return (
-    <div className="md:mt-24 min-h-screen py-12">
+    <div className=" min-h-screen py-12">
+      <h2 className="font-bold text-white text-center text-5xl md:text-5xl mb-8">{' '}
+              CATEGORIAS
+            </h2>
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text mb-12">Categorías</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {categories.map((category) => (
             <motion.div
@@ -84,7 +86,7 @@ export default function CategoryShowcase() {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.1 }}
                   >
-                    Explorar
+                  
                   </motion.span>
                 </motion.div>
               )}

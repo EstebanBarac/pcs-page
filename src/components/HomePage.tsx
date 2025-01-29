@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronDownIcon } from 'lucide-react'
 import localFont from 'next/font/local'
+import Image from 'next/image'
 
 const horizon = localFont({ src: '../../public/fonts/horizon.otf' })
 
@@ -33,35 +34,22 @@ export default function HomePage() {
           <p className="text-xl font-extrabold md:text-2xl bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">
             HARDWARE
           </p>
-        </motion.div>
-
-        <div className="relative w-full max-w-6xl mx-auto rounded-lg overflow-hidden shadow-2xl mb-24 md:mb-8">
-          <video
-            ref={videoRef}
-            className="w-full h-auto"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            <source src="1219.mp4" type="video/mp4" />
-            Tu navegador no soporta el tag de video.
-          </video>
-
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-            <div className="flex items-center justify-between">
-              {/* Controles del video opcionales */}
-            </div>
-          </div>
-        </div>
-
+        </motion.div>   
         <motion.div
           className="flex justify-center"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.5 }}
         >
-          <motion.div
+        </motion.div>
+        <Image
+              src='/banners/banner 1-home (1).png'
+              alt="banner-1"
+              width="1500"
+              height="200"
+              className="" 
+            />
+            <motion.div
             animate={{
               y: [0, 10, 0],
             }}
@@ -73,7 +61,6 @@ export default function HomePage() {
           >
             <ChevronDownIcon className="w-10 h-10 text-amber-600" aria-label="Desplázate hacia abajo para ver más contenido" />
           </motion.div>
-        </motion.div>
       </div>
     </div>
   )

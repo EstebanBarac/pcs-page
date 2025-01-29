@@ -8,17 +8,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-lg font-semibold mb-4">Noxus Hardware</h3>
-            <p className="text-gray-400">Tienda Online de Hardware en Neuquen Capital, Argentina. Envios gratis en Neuquen, consultar envios fuera de la provincia. </p>
+            <p className="text-gray-400">Tienda Online de Hardware y armado de computadoras a medida en Neuquen Capital, Argentina. Envios gratis en Neuquen, consultar envios fuera de la provincia. </p>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Secciones</h3>
             <ul className="space-y-2">
             <li><Link href="/" className="text-gray-400 hover:text-white">Inicio</Link></li>
-              <li><Link href="/categoria/pcs-nuevas-graficas-outlet" className="text-gray-400 hover:text-white">PCs Nuevas con Gráficas Outlet</Link></li>
-              <li><Link href="/categoria/pcs-nuevas-rtx-40" className="text-gray-400 hover:text-white">PCs Nuevas</Link></li>
-              <li><Link href="/categoria/placas-de-video" className="text-gray-400 hover:text-white">Placas de Video</Link></li>
-              <li><Link href="/categoria/perifericos" className="text-gray-400 hover:text-white">Periféricos</Link></li>
-              <li><Link href="/categoria/perifericos" className="text-gray-400 hover:text-white">¿Qué PC Elegir?</Link></li>
+              <li><Link href="/modelos" className="text-gray-400 hover:text-white">Modelos</Link></li>
+              <li><Link href="/placas-de-video" className="text-gray-400 hover:text-white">Placas de Video</Link></li>
+              <li><Link href="/monitores" className="text-gray-400 hover:text-white">Monitores</Link></li>
+              <li><Link href="/como-elegir" className="text-gray-400 hover:text-white">¿Qué PC Elegir?</Link></li>
             </ul>
           </div>
           <div>
