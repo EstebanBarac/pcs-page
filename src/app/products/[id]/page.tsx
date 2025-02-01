@@ -31,6 +31,7 @@ interface Product {
   spec_refrigeracion: string;
   spec_fuente: string;
   spec_ram: string;
+  spec_almacenamiento: string;
   in_stock: boolean;
 }
 
@@ -88,6 +89,7 @@ async function getProductWithCategory(id: string): Promise<{ product: Product; c
       spec_refrigeracion: data.spec_refrigeracion,
       spec_fuente: data.spec_fuente,
       spec_ram: data.spec_ram,
+      spec_almacenamiento: data.spec_almacenamiento,
       in_stock: data.in_stock,
     },
     category: {
@@ -99,7 +101,7 @@ async function getProductWithCategory(id: string): Promise<{ product: Product; c
 
 function ProductSpecs({ product }: { product: Product }) {
   const specs = [
-    { name: "GABINETE", value: product.spec_mother },
+    { name: "GABINETE", value: "4000D (o similar)" },
     { name: "GPU", value: product.spec_grafica },
     { name: "CPU", value: product.spec_procesador },
     { name: "MOTHERBOARD", value: product.spec_mother },
@@ -107,15 +109,15 @@ function ProductSpecs({ product }: { product: Product }) {
     { name: "ENFRIAMIENTO", value: product.spec_refrigeracion },
     { name: "FUENTE", value: product.spec_fuente },
     { name: "SOFTWARE", value: "WINDOWS 11" },
-    { name: "MEMORIA", value: "1TB KINGSTON NV5" },
+    { name: "MEMORIA", value: product.spec_almacenamiento },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
       {specs.map((spec, index) => (
-        <div key={index} className="bg-[#1A1731]/80 p-4 rounded-md backdrop-blur-sm text-center">
-          <h3 className="text-white text-lg font-bold mb-2">{spec.name}</h3>
-          <p className="text-gray-400">{spec.value}</p>
+        <div key={index} className="bg-[#1A1731]/80 p-3 rounded-md backdrop-blur-sm text-center">
+          <h3 className="text-white text-base sm:text-lg font-bold mb-2">{spec.name}</h3>
+          <p className="text-gray-400 text-sm sm:text-base">{spec.value}</p>
         </div>
       ))}
     </div>
@@ -201,18 +203,18 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
   return (
     <div 
-      className="min-h-screen bg-center"
+      className="min-h-screen bg-center overflow-x-hidden"
       style={{
         backgroundImage: `url('/fondo/fondo01prueba.png')`,
       }}
     >
       <div className="min-h-screen bg-black/70 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 py-16">
-          <h1 className="text-5xl font-bold mb-8 text-center text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+          <h1 className="text-3xl sm:text-5xl font-bold mb-6 text-center text-white">
             {product.name}
           </h1>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             <div className="relative">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -245,21 +247,21 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
               </button>
             </div>
 
-            <div className=" p-6 rounded-lg">
-              <h2 className="text-3xl font-bold mb-4 text-white">Especificaciones</h2>
+            <div className="p-4 sm:p-6 rounded-lg">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-white">Especificaciones</h2>
               <ProductSpecs product={product} />
               <div className="mb-4">
                 {product.discounted_price ? (
                   <>
-                    <span className="text-2xl text-gray-400 line-through mr-2">
+                    <span className="text-xl sm:text-2xl text-gray-400 line-through mr-2">
                       {formatPrice(product.price)}
                     </span>
-                    <span className="text-4xl font-bold text-amber-600">
+                    <span className="text-2xl sm:text-4xl font-bold text-amber-600">
                       {formatPrice(product.discounted_price)}
                     </span>
                   </>
                 ) : (
-                  <span className="text-4xl font-bold text-white">
+                  <span className="text-2xl sm:text-4xl font-bold text-white">
                     {formatPrice(product.price)}
                   </span>
                 )}
@@ -267,7 +269,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
               <Button 
                 onClick={handleAddToCart}
                 disabled={!product.in_stock}
-                className={`w-full py-3 text-lg font-bold ${
+                className={`w-full py-2 sm:py-3 text-base sm:text-lg font-bold ${
                   product.in_stock ? 'bg-amber-600 hover:bg-amber-700' : 'bg-gray-600 cursor-not-allowed'
                 }`}
               >
@@ -276,13 +278,11 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          <div className="mb-16 bg-[#1A1731]/80 p-6 rounded-md backdrop-blur-sm">
-            <h2 className="text-3xl font-bold mb-4 text-white">Descripción</h2>
-            <p className="text-gray-300 text-xl mb-4">{product.description_primera}</p>
-            <p className="text-gray-300 text-xl">{product.description_segunda}</p>
+          <div className="mb-12 bg-[#1A1731]/80 p-4 sm:p-6 rounded-md backdrop-blur-sm">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-white text-center">Descripción</h2>
+            <p className="text-gray-300 text-base sm:text-xl mb-4 text-center">{product.description_primera}</p>
+            <p className="text-gray-300 text-base sm:text-xl text-center">{product.description_segunda}</p>
           </div>
-
-          {/* You can add more sections here, like customer reviews, related products, etc. */}
         </div>
       </div>
     </div>
