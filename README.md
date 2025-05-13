@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+💻 Noxus PC – Tienda Online de Computadoras a Medida
+Venta de PCs Gamer, Perifericos y Placas Graficas
 
-## Getting Started
+Funcionalidades del sitio
 
-First, run the development server:
+✅ Catálogo completo con PCs armadas y periféricos premium.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+✅ Detalle técnico completo de cada equipo (CPU, GPU, RAM, refrigeración, etc.).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+✅ Filtros por categoría, rendimiento, precio y uso.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+✅ Carrusel de imágenes en cada producto.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+✅ Carrito de compras y pago integrado con MercadoPago.
 
-## Learn More
+✅ Panel administrativo para cargar productos, editoarlos y recibir órdenes.
 
-To learn more about Next.js, take a look at the following resources:
+🛠️ Tecnologías utilizadas
+Frontend: Next.js 14.2, TypeScript, TailwindCSS
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Backend / DB: Supabase (productos, imágenes, órdenes, usuarios)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Pasarela de pago: MercadoPago integrada
 
-## Deploy on Vercel
+Almacenamiento: Supabase Storage (para imágenes)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Deploy: Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+💳 Flujo de compra
+
+El usuario navega el catálogo y elige su computadora.
+
+Revisa el detalle completo y puede ver imágenes en carrusel.
+
+Agrega al carrito y paga con MercadoPago de forma segura.
+
+El pedido queda registrado y se procesa para envío o armado.
+
+Home
+
+![home-noxuspc](https://github.com/user-attachments/assets/943fe668-1de8-42b2-bd71-dee6df02f798)
+
+Productos
+
+![productos-noxuspc](https://github.com/user-attachments/assets/1fdd0dd1-b529-4b04-bd7a-3264d67ad06b)
+
+Personalizacion
+
+![personalizacion-noxuspc](https://github.com/user-attachments/assets/e72a90f5-26a0-41b6-b119-56df40bfd384)
+
+Personalizacion (eleccion de componente)
+
+![modal-on-noxuspc](https://github.com/user-attachments/assets/56bfc72b-b78e-45d2-a587-0fad628191ce)
